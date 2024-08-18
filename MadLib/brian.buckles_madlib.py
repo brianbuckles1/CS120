@@ -5,8 +5,8 @@
 # variables and inputs
 vehicle = input("Name a vehicle: ")
 color = input("Please provide a color: ")
-sitting_next_to=input("What are you sitting next to: ")
-clothing = input("What kind of clothing do you like: ")
+sitting_next_to=input("Naming a person, animal, or object: ")
+clothing = input("Name a piece of clothing: ")
 footware = input("What kind of footware do you like? boots, slippers, sneakers, ...:  ")
 drink = input("What do you like to drink: ")
 dinner=input("What did you have or going to have for dinner: ")

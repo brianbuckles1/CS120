@@ -19,4 +19,4 @@ create a variable weather_type for weather that will be set by prompting the use
 create a variable river for a river that will be set by prompting the user for "Name a river"
 create a variable song_lyrics for holding the song lyrics to Luke Bryan's - That's my kind of night lyrics
 replace lyrics using fstring with the variables that were created and set
-output lyrics to the end user
+output final lyrics to the end user
