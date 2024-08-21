@@ -4,38 +4,38 @@
 
 # variables and inputs
 
-# create a variable and store the vehicle input from the user
+# create a variable vehicle and store the vehicle input from the user
 vehicle = input("Name a vehicle: ")
-# create a variable and store the color input from the user
+# create a variable color and store the color input from the user
 color = input("Name a color: ")
-# create a variable and store the person, place or thing input from the user
+# create a variable sitting_next_to and store the person, place or thing input from the user
 sitting_next_to=input("Naming a person, animal, or thing: ")
-# create a variable and store the clothing input from the user
+# create a variable clothing and store the clothing input from the user
 clothing = input("Name a piece of clothing: ")
-# create a variable and store the footware input from the user
+# create a variable footware and store the footware input from the user
 footware = input("Name a footware? boots, slippers, sneakers, ...:  ")
-# create a variable and store the drink input from the user
+# create a variable drink and store the drink input from the user
 drink = input("Name a drink: ")
-# create a variable and store the dinner input from the user
+# create a variable dinner and store the dinner input from the user
 dinner=input("Name a dinner: ")
-# create a variable and store the result of the location input from the user
+# create a variable location and store the result of the location input from the user
 location = input("Name a location: ")
-# create a variable and store the result of the activity input from the user
+# create a variable activity and store the result of the activity input from the user
 activity = input("Name an activity: ")
-# create a variable and store the result of the music genre input from the user
+# create a variable music_genre and store the result of the music genre input from the user
 music_genre=input("Name a music genre: ")
-# create a variable and store the result of the music genre artist input from the user
+# create a variable music_genre_artist and store the result of the music genre artist input from the user
 music_genre_artist=input(f"Name an artist in {music_genre}: ")
-# create a variable and store the result of the music genre 2 input from the user
+# create a variable music_genre_2 and store the result of the music genre 2 input from the user
 music_genre_2=input("Name a second music genre: ")
-# create a variable and store the result of the music genre 2 artist input from the user
+# create a variable music_genre_2_artist and store the result of the music genre 2 artist input from the user
 music_genre_2_artist=input(f"Name a artist in {music_genre_2}: ")
-# create a variable and store the result of the weather type input from the user
+# create a variable weather_type and store the result of the weather type input from the user
 weather_type=input("Name a type of weather: ")
-# create a variable and store the result of the river name input from the user
+# create a variable river and store the result of the river name input from the user
 river=input("Name a river: ")
 
-# create a variable with the song lyrics with the replacements from the stored variable inputs
+# create a variable song_lyrics with the song lyrics with the replacements from the stored variable inputs
 song_lyrics=f"""
 Uh, uh
 I got that real good, feel good stuff

@@ -3,20 +3,20 @@
 # 8/18/2024
 
 # variables and inputs
-# create a variable and store the vehicle input from the user
-# create a variable and store the color input from the user
-# create a variable and store the person, place or thing input from the user
-# create a variable and store the clothing input from the user
-# create a variable and store the footware input from the user
-# create a variable and store the drink input from the user
-# create a variable and store the dinner input from the user
-# create a variable and store the result of the location input from the user
-# create a variable and store the result of the activity input from the user
-# create a variable and store the result of the music genre input from the user
-# create a variable and store the result of the music genre artist input from the user
-# create a variable and store the result of the music genre 2 input from the user
-# create a variable and store the result of the music genre 2 artist input from the user
-# create a variable and store the result of the weather type input from the user
-# create a variable and store the result of the river name input from the user
-# create a variable with the song lyrics with the replacements from the stored variable inputs
-#output the final result to the user
+# create a variable vehicle and store the vehicle input from the user
+# create a variable color and store the color input from the user
+# create a variable sitting_next_to and store the person, place or thing input from the user
+# create a variable clothing and store the clothing input from the user
+# create a variable footware and store the footware input from the user
+# create a variable drink and store the drink input from the user
+# create a variable dinner and store the dinner input from the user
+# create a variable location and store the result of the location input from the user
+# create a variable activity and store the result of the activity input from the user
+# create a variable music_genre and store the result of the music genre input from the user
+# create a variable music_genre_artist and store the result of the music genre artist input from the user
+# create a variable music_genre_2 and store the result of the music genre 2 input from the user
+# create a variable music_genre_2_artist and store the result of the music genre 2 artist input from the user
+# create a variable weather_type and store the result of the weather type input from the user
+# create a variable river and store the result of the river name input from the user
+# create a variable song_lyrics with the song lyrics with the replacements from the stored variable inputs
+# output the final result of the song_lyrics with the variable replacements to the user
