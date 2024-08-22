@@ -11,8 +11,9 @@ questions and the answers will be stored in variables for use in the final
 end result where they will be used to replace keywords in the lyrics using
 f strings.
 
+
 ---------------------------------------------------------------------
-Original
+Original lyrics
 ---------------------------------------------------------------------
 Uh, uh
 I got that real good, feel good stuff
