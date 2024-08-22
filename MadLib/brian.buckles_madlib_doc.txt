@@ -3,6 +3,15 @@ Brian Buckles
 8/18/2024
 
 ---------------------------------------------------------------------
+Final output with variables to be replaced
+---------------------------------------------------------------------
+Create a mad lib game that will use lyrics from a Luke Bryan song named
+That's My Kind of Night.  The user will be prompted for input for various
+questions and the answers will be stored in variables for use in the final
+end result where they will be used to replace keywords in the lyrics using
+f strings.
+
+---------------------------------------------------------------------
 Original
 ---------------------------------------------------------------------
 Uh, uh
