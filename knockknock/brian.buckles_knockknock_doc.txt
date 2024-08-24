@@ -1,0 +1,41 @@
+Knock Knock Joke
+Brian Buckles
+8/24/2024
+
+---------------------------------------------------------------------
+Description
+---------------------------------------------------------------------
+Create a knock knock joke that will interacte with the user.  The input
+should validate expected values from the user and process accordingly.
+
+
+---------------------------------------------------------------------
+Variables
+---------------------------------------------------------------------
+
+user_name - used to store the user input result for user name questions.
+user_play - used to store the user input result for if the user wants to hear a knock knock joke.
+joke_start - stores the classic knock knock
+user_whos_there - stores the expected users input "who's there?"
+joke_name - stores the name to be used in the joke.  example: "Boo"
+user_who - used to store the user input result for the knock knock joke who. example: "Boo Who?"
+
+---------------------------------------------------------------------
+Process
+---------------------------------------------------------------------
+1. Ask the user for name and store it in a variable named user_name.
+2. Ask the user if they want to hear a knock knock joke and store the first character in a variable named user_play
+    a. if the user_play variable ignoring case does not equal y
+        - output to the user what it was expected
+        - exit application
+3. Create a variable named joke_start and store the start of the knock knock joke and display it to the user.
+4. Wait for user input and store it in a variable named user_whos_there
+    a. if the user_whos_there ignoring case does not equal "who's there?"
+        - output to the user what it was expected
+        - exit application
+5. Create a variable joke_name which stores the knock knock joke name
+4. Wait for user input and store it in a variable named user_who
+    a. if the user_who ignoring case does not match the concatination of joke_name + " who?" 
+        - output to the user what it was expected
+        - exit application
+5. output the conclusion to the knock knock joke.
