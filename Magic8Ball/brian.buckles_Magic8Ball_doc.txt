@@ -1,0 +1,45 @@
+Magic 8 Ball
+Brian Buckles
+8/31/2024
+
+---------------------------------------------------------------------
+Description
+---------------------------------------------------------------------
+Create a Magic 8 Ball application that will take numeric and output a predictability
+response back to the user.
+
+---------------------------------------------------------------------
+Variables
+---------------------------------------------------------------------
+menu_selection - get the menu selection from the user
+specific_fortune - string that will store the response of the user specific fortune response.
+fortune_index - integer from the integer conversion of the specific_fortune
+fortunes - tuble containing all the fortunes avaiable.
+question - question from user
+random_fortune_index - integer that stores the result of the random integer generated.
+
+
+---------------------------------------------------------------------
+Process
+---------------------------------------------------------------------
+Onload print the user a menu with a coresponding number next to it.
+   1 Show All Fortunes
+   2 Show Specific Fortune
+   3 Ask Question For Your Fortune
+
+Set the menu_selection to the input result of the menu selection.
+Validate the menu_selection is 1, 2, or 3.  If not return message of what is expected.
+
+If menu_selection is 1 
+   - loop through all the fortunes and print it.
+If menu_selection is 2 
+   - ask the user for the index of the fortune they would like to see and store it in the specific_fortune variable
+   - Validate the specific_fortune is numeric
+   - convert to integer
+   - validate it is in the index range
+   - Print fortune that matches the specific_fortune index
+If menu_selection is 3
+   - ask the user for their question and store it in the question variable
+   - print out the question variable
+   - generate a random number from range 0 to fortunes count and store it in random_fortune_index variable
+   - print the fortune for the random_fortune_index
