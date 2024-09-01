@@ -32,14 +32,18 @@ Validate the menu_selection is 1, 2, or 3.  If not return message of what is exp
 
 If menu_selection is 1 
    - loop through all the fortunes and print it.
+   - exit
 If menu_selection is 2 
    - ask the user for the index of the fortune they would like to see and store it in the specific_fortune variable
    - Validate the specific_fortune is numeric
    - convert to integer
    - validate it is in the index range
    - Print fortune that matches the specific_fortune index
+   - exit
 If menu_selection is 3
    - ask the user for their question and store it in the question variable
    - print out the question variable
    - generate a random number from range 0 to fortunes count and store it in random_fortune_index variable
    - print the fortune for the random_fortune_index
+   - exit
+If the user makes it this far that mean they did not have a valid menu_selection and let them know.
