@@ -1,0 +1,29 @@
+Number Guesser Game
+Brian Buckles
+09/07/2024
+
+number_of_guesses int variable and set to 6.  Since it is zero based index subtract one from the total guesses we want.
+winning_number int variable and using the random library set to the rand integer passing in 0  and 100
+keep_going boolean variable to control the while loop
+print number guesser
+print simple instructions
+while keep_going
+    if the number_of_guesses greater than or equal to 7
+        set keep_going equal to false
+        break out of current loop iteration
+    ask the user for a number and set a new variable user_guess
+    check if user_guess is a number
+        if user_guess is not a number let the user know
+        subtract 1 from the number_of_guesses
+        break out of current loop iteration
+    create a variable and set to conversion of user_guess to integer for comparision
+    check if user_guess is equal to the winning_number
+        let them know they won
+        set keep_going to false
+        break out of current loop iteration
+    check if user_guess is less than winning_number
+        let the user know it is lower
+    check if user_guess is more than winning_number
+        let the user know it is higher
+    subtract 1 from the number_of_guesses
+thank the user for playing
