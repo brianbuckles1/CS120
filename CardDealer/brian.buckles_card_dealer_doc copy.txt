@@ -1,0 +1,61 @@
+# Card Dealer
+# Brian Buckles
+# 9/15/2024
+
+Constants
+NUMCARDS - number of cards
+RANKNAME - card name
+SUITNAME - hearts, clubs, spades, diamonds
+HANDS - assignment types
+DECK - 0 unassigned assignment type index
+PLAYER - 1 player assignment type index
+COMPUTER - 2 computer assignment type index
+
+main
+    Create cardDB and initialize using initCards() function
+    Assign five cards to the player using the assignCard() function
+    Assign five cards to the computer using the assignCard() function
+    Show the current deck using the showDeck() function
+    Show the cards the player has been assigned using showHand(cardDB, PLAYER) which will take the cardDB and PLAYER constant
+    Show the cards the computer has been assigned using the showHand(cardDB, COMPUTER) which will take teh cardDB and COMPUTER constant
+
+initCards()
+    No Parameters
+    Create an empty list called cardDB
+    assign 52 entries all set to zero
+    return cardDB to caller
+
+assignCard()
+    Parameters
+        - cardDB - list of the card assignments
+        - hand - index of the assignee
+    create a loop that will loop until the first random card that is not assigned
+    Create a variable selectedCard and assign it to random number using the rand library for range 0,51
+    Check the cardDB for 0 if not 0 choose another random number
+    Assign hand parameter to that index in the cardDB parameter
+
+showDB()
+    Parameters
+        - cardDB - list of the card assignments
+    loop through all the card assignments
+        - Print card number
+        - Print card name getCardName() passing card index
+        - Print card location
+    No return
+
+showHand()
+    Parameters
+        - cardDB - list of the card assignments
+        - hand - who it is assigned too. Example: Computer, Player, Deck
+    loop through cardDB parameter and if the card assignment is equal to hand
+        - Print card name getCardName() passing the card index
+    No return
+
+getCardName()
+    -Parameters
+        - cardIndex - index of the card to get the name
+    create variable suit and set it equal to integer of cardIndex divided by 13
+    create variable rank and set it equal to modulus of cardIndex divided by 13
+    get the suit equal to the value at index from the SUITNAME tuple
+    get the rank equal to the value at index from the RANKNAME tuple
+    return string of rank and suit
