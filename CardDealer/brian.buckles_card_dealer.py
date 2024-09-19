@@ -62,7 +62,8 @@ def assignCard(cardDB, hand):
 def showDB(cardDB):
     '''Show all the card assignments'''
     for index in range(len(cardDB)):
-        print(f'{index}\t{getCardName(index)} - {HANDS[cardDB[index]]}')
+        # format nicely with 18 chars
+        print(f'{index}\t{getCardName(index):<18}\t{HANDS[cardDB[index]]}')
     return
 
 def showHand(cardDB, hand):
