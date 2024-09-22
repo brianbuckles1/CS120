@@ -1,0 +1,40 @@
+# Adventure Game
+# Brian Buckles
+# 9/22/2024
+
+main
+    Variables
+        - game_data - holds the game data loaded
+        - keep_going - defaults to true used to keep the game going.
+        - current_node_key - holds the current game data key and it defaults to "start"
+    game_data = load_game_data()
+
+    while keep_going
+        get_menu_result()
+        if result equals quit
+            set keep_going to false
+            continue to next iteration
+
+
+load_game_data()
+    Parameters
+        - None
+    Variables
+        - game_data - holds the game data to return to the caller
+    - build the dictionary
+    - return dictionary to caller
+
+get_next_node(current_node_key, game_data)
+    Parameters
+        - current_node_key - string of the current node key in the dictionary
+        - game_data - game dictionary
+    Variables
+        - user_choice - holds the user choice input
+    - display the game_data description for the current_node_key
+    - display the menu options for the current_node_key
+    - get user input and set it to user_choice variable
+    - validate choice is a 1 or 2 only
+    - if invalid choice print not a valid choice and return the current_node_key to be used again. 
+        Since the node columns are in 2 and 4 and the user input is validated as a 1 or 2, 
+        we can multiply the user value by 2.
+    - return the node for what the user selected
