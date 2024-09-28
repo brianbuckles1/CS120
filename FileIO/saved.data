@@ -1,0 +1,23 @@
+{
+  "start": [
+    "You stand at the entrance of a dark forest. The path splits into two.",
+    "Enter the forest",
+    "forest",
+    "Follow the river",
+    "river"
+  ],
+  "asdf": [
+    "Test",
+    "start",
+    "start",
+    "quit",
+    "quit"
+  ],
+  "quit": [
+    "Quit Game",
+    "start",
+    "start",
+    "quit",
+    "quit"
+  ]
+}
