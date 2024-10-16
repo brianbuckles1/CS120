@@ -1,6 +1,9 @@
 import random
 
 class Character():
+    """ basic character class for storing various information
+        for a turn based rpg style game."""
+    
     def __init__(self, name:str, hit_points:int, hit_chance:int, 
                  max_damage:int, armor:int):
         """ class default constructor that will set the initial
@@ -76,7 +79,7 @@ class Character():
 
         return out
     
-    def attack(self)->int:
+    def get_attack(self)->int:
         """ returns the characters damage.  It will
             calculate if the character hits and if 
             a hit will generate a random number
@@ -99,7 +102,7 @@ class Character():
             then hit points is set to 0"""
         total_damage_taken = 0
         total_absorbed = 0
-        if incoming_damage >= self.get_armor():
+        if incoming_damage > self.get_armor():
             total_damage_taken = incoming_damage - self.get_armor()
 
         total_absorbed = incoming_damage - total_damage_taken
@@ -112,12 +115,49 @@ class Character():
             new_hit_points = self.get_hit_points() - total_damage_taken
             self._set_hit_points(new_hit_points)
         
+        print(f"{self.get_name()} has {self.get_hit_points()} hit points left!")
+
+    def take_turn(self, defender)->bool:
+        """ characters turn to apply damage and returns a
+            boolean if character wins.  This is true if 
+            the defender's hit points are 0.
+        """
+        print(f"\n{self.get_name()} turn:")
+        defender.apply_damage(self.get_attack())
+        if defender.get_hit_points() == 0:
+            print(f"{self.get_name()} wins!")
+        
+@staticmethod
+def fight(character1:Character, character2:Character):
+    """ pit two characters together and have them fight
+        until one character run out of hit points.
+        Returns the winning character"""
+
+    character1.print_stats()
+    character2.print_stats()
+    
+    keepGoing = True
+    round = 1
+
+    while(keepGoing):
+        print(f"\nRound {round}:")
+
+        character1.take_turn(character2)
+        if character2.get_hit_points() == 0:
+            keepGoing = False
+        else:
+            character2.take_turn(character1)
+            
+            if character1.get_hit_points() == 0:
+                keepGoing = False
+        input("press any key to continue.")
+        round += 1
+
+def main():
+    hero = Character("Hero",10,50,5,2)
+    monster = Character("Monster",20,30,5,0)
+    fight(hero,monster)
 
 
-hero = Character("test",100,20,100,40)
-hero.print_stats()
-hero.attack()
-hero.apply_damage(40)
-hero.apply_damage(150)
-hero.print_stats()
-# print(hero.print_stats())
+if __name__ == "__main__":
+    main()

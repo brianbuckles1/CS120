@@ -61,7 +61,7 @@ attack()
 
 apply_damage(incoming_damage)
     Parameters
-     incoming_damage is equal to the total amount of damage to take
+        incoming_damage is equal to the total amount of damage to take
 
     create a variable total_damage_taken = 0
     if incoming_damage >= __armor
@@ -76,8 +76,15 @@ apply_damage(incoming_damage)
     if __hit_points <0
         set __hit_points = 0
 
-get_is_alive()
-    returns boolean set to __hit_points != 0
+take_turn(defender)
+    Parameters
+        defender - of type character
+    
+    print Turn
+    call defender apply_damage and pass attack results
+    if defender has points are 0
+        print character get_name() wins
+
 
 ---------------------------------------------------------
 Combat class
@@ -93,13 +100,13 @@ fight(combatant1, combatant2)
      keepGoing boolean default to false.
      while keepGoing
         combatant2.apply_damage(combatant1.attack())
-        if combatant2.get_is_alive() is false
+        if combatant2.get_hit_points == 0
             print combatant.get_name() wins
             keepGoing = false
         else 
             combatant1.apply_damage(combatant2.attack())
             
-            if combatant1.get_is_alive() is false
+            if combatant1.get_hit_points == 0
                 print combatant2.get_name() wins
                 keepGoing = false
 
