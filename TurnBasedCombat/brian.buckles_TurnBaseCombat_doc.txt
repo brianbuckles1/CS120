@@ -1,0 +1,113 @@
+Turn Based Combat
+Brian Buckles
+10/14/2024
+
+---------------------------------------------------------
+Character class
+---------------------------------------------------------
+All combatants will implement this as a base class
+
+Variables
+-----------------------
+__name - name of combatant
+__hit_points - total points allowed before being defeated at 0 or below.
+__hit_chance - ability to hit another combatants.
+__max_damage - total damage allowed in an attack.
+__armor - total protection that will be used to adjust the incoming damage.
+
+Functions
+-----------------------
+init()
+    Parameters
+        name - name of the combatant default
+        hit_points - integer of the total hit points
+        hit_chance - chance to hit the other Combatant
+        max_damage - base maximum damage allowed in an attack
+        armor - protection that will be used to adjust any incoming damage
+    
+    set __name = name
+    set __hit_points = testInt(hit_points, min=1, default=1)
+    set __hit_chance = testInt(hit_chance,min=1)
+    set __max_damage = testInt(max_damage,min=1)
+    set __armor = testInt(armor,min=1)
+
+get_name()
+    return __name variable
+
+get_hit_points()
+    return __hit_points
+
+get_hit_chance()
+    return __hit_chance
+
+get_max_damage()
+    return __max_damage
+
+get_armor()
+    return __armor
+
+print_stats()
+    return string showing name,hit_points,hit_chance,max_damage,armor formatted nicely
+
+attack()
+    create a variable damage and set to 0
+    create a variable calculated_hit and set it to a random number from 1 to 100
+    if calculated_hit > __hit_chance
+        set damage to a random integer from 1 to __max_damage
+        print __name attacks for damage variable value
+    else
+        print missed
+    returns damage integer
+
+apply_damage(incoming_damage)
+    Parameters
+     incoming_damage is equal to the total amount of damage to take
+
+    create a variable total_damage_taken = 0
+    if incoming_damage >= __armor
+        total_damage_taken = incoming_damage - __armor
+    create a variable total_absorbed = incoming_damage - total_damage_taken
+
+    print __name absorbs total_absorbed variable value
+    print __name takes total_damage_taken variable value
+
+    set __hit_points = __hit_points - total_damage
+
+    if __hit_points <0
+        set __hit_points = 0
+
+get_is_alive()
+    returns boolean set to __hit_points != 0
+
+---------------------------------------------------------
+Combat class
+---------------------------------------------------------
+
+Static Functions
+-----------------------
+fight(combatant1, combatant2)
+    Parameters
+     combatant1 - Character type
+     combatant2 - Character type
+
+     keepGoing boolean default to false.
+     while keepGoing
+        combatant2.apply_damage(combatant1.attack())
+        if combatant2.get_is_alive() is false
+            print combatant.get_name() wins
+            keepGoing = false
+        else 
+            combatant1.apply_damage(combatant2.attack())
+            
+            if combatant1.get_is_alive() is false
+                print combatant2.get_name() wins
+                keepGoing = false
+
+
+
+---------------------------------------------------------
+main
+---------------------------------------------------------
+create a variable named hero = new Combatant("Hero",10,50,5,2)
+create a variable named monster = new Combatant("Monster",20,30,5,0)
+call the combat class static fight(hero,monster) passing hero and monster
