@@ -1,0 +1,144 @@
+# Adventure Game FileIO module version
+# Brian Buckles
+# 9/28/2024
+
+
+main() - of course.
+    Variables
+        - keep_going - defaults to True
+        - menu - holds menu choices
+        - user_menu_choice - holds the selected menu choice user made
+        - game_data - holds the game dictionary
+    Runs the main loop
+    set menu to getMenu()
+    set game_data - getDefaultGame() -- default so something is loaded.
+
+    while(keep_going)
+        user_menu_choice a getMenuChoice(menu)
+        case switch for the user_menu_choice
+            - when exit 
+                - set keep_going to False
+            - when default 
+                set game_data to getDefaultGame()
+            - when load 
+                set game_data to loadGame()
+            - when save 
+                saveGame(game_data)
+            - when edit 
+                editNode(game_data)
+            - when play 
+                playGame(game_data)
+
+getMenu()
+    Parameters
+        -None
+    Variables
+        - menu - array of all the valid menu choices
+    create a variable tuple holding all the options for the menu
+    returns all the menu choices as a tuple
+
+getMenuChoice(menu)
+    Parameters:
+        menu - contains all the valid menu choices.
+    Variables:
+        - user_menu_choice - holds the menu choice selected
+        - keep_going - defaults to True
+    Returns
+        - user_menu_choice index from the menu_choices
+    while(keep_going)
+        prints all the menu
+        get user_menu_choice from user input
+        if user_menu_choice in menu
+            return user_menu_choice
+
+playGame(game_data)
+    Parameters
+        - game_data - game data to be used.
+    Variables
+        - game_data - holds the game data loaded
+        - keep_going - defaults to true used to keep the game going.
+        - current_node_key - holds the current game data key and it defaults to "start"
+
+    while keep_going
+        playNode(current_node_key, game_data)
+        if result equals quit
+            set keep_going to false
+            continue to next iteration
+
+playNode(current_node_key, game_data)
+    Parameters
+        - current_node_key - string of the current node key in the dictionary
+        - game_data - game dictionary
+    Variables
+        - user_choice - holds the user choice input
+    Returns
+        - user_choice - game choice dictionary key
+    - display the game_data description for the current_node_key
+    - display the menu options for the current_node_key
+    - get user input and set it to user_choice variable
+    - validate choice is a 1 or 2 only
+    - if invalid choice print not a valid choice and return the current_node_key to be used again. 
+        Since the node columns are in 2 and 4 and the user input is validated as a 1 or 2, 
+        we can multiply the user value by 2.
+    - return user_choice
+
+editNode(game_data)
+    Parameters
+        - game_data - the current loaded game data
+    Variables
+        - user_node_choice - holds the current node key
+        - current_node_data - holds the array of values of the current_node dictionary entry
+        - new_node_data - holds the replacements for the current node
+    Returns
+        - game_data - modified game data
+
+    print each node from the game_data
+    print back for a go back option 
+    set current_node_data to empty 5 space array
+    set the user_node_choice to user input for the node to modify
+
+    if game_data contains user_node_choice
+        set current_node_data to the array at the dictionary key
+
+
+
+    if current_node_data[0] == "":
+        current_node_data[0]
+        append to the end of the game_data
+    else
+        update existing node 
+
+    return the now edited game_data
+
+editField(text, current_value)
+    Parameters
+        - text - text to display to the user.
+        - current_value is the current value.
+    Returns 
+        - current_value only changes if the string is not empty
+    print text and get user input for changes
+    if string is empty then return current_value
+    else set current_value to the input
+    return current_value
+
+saveGame(game_data, file_name)
+    Parameters
+        - game_data - dictionary that holds the game data to be serialized and saved to file
+        - file_name - name of the file to save.  This will only be used by the application and not input from the user.
+    set game_data_json to json serialized game_data
+    open file_name file in write mode 
+    write game_data as serialized json
+    close file_name file
+
+loadGame(file_name)
+    Parameters
+        file_name - name of the file to load.  This will only be used by the application and not input from the user
+    Returns
+        - game_data - dictionary containing the game data and menu options.
+
+    open file_name file in read mode
+    set file_data to file contents
+    set game_data to the deserialized json data from the file_data
+    close file
+
+    return game_data

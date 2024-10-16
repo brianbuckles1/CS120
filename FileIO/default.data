@@ -1,0 +1,13 @@
+{
+  "start": ["You stand at the entrance of a dark forest. The path splits into two.", "Enter the forest", "forest", "Follow the river", "river"], 
+  "forest": ["The forest is dense and eerie. You hear rustling in the bushes.", "Investigate the noise", "noise", "Continue deeper into the forest", "deep"], 
+  "river": ["The river flows swiftly. You see a boat tied to a tree.", "Take the boat", "boat", "Walk along the riverbank", "bank"], 
+  "noise": ["A rabid squirrel jumps out and attacks you.  You do not make it.", "Start over", "start", "Quit", "quit"], 
+  "deep": ["You find a hidden cave with glowing crystals.", "Enter the cave", "cave", "Turn back", "start"], 
+  "boat": ["The boat takes you to a small island with a treasure chest.", "Open the chest", "chest", "Return to the shore", "river"], 
+  "bank": ["You find a bridge leading to a village.", "Cross the bridge", "village", "Return to the forest", "forest"], 
+  "cave": ["The cave is filled with ancient artifacts.", "Examine the artifacts", "artifacts", "Leave the cave", "deep"], 
+  "chest": ["The chest is filled with gold and jewels. You are rich!", "Start over", "start", "Quit", "quit"], 
+  "village": ["The villagers welcome you and offer you a place to stay.", "Start over", "start", "Quit", "quit"], 
+  "artifacts": ["You accidentally trigger a trap and the cave collapses.", "Start over", "start", "Quit", "quit"]
+}
