@@ -1,0 +1,95 @@
+Turn Based Combat
+Brian Buckles
+10/14/2024
+
+---------------------------------------------------------
+Character class
+---------------------------------------------------------
+All combatants will implement this as a base class
+
+Variables
+-----------------------
+__name - name of combatant
+__hit_points - total points allowed before being defeated at 0 or below.
+__hit_chance - ability to hit another combatants.
+__max_damage - total damage allowed in an attack.
+__armor - total protection that will be used to adjust the incoming damage.
+
+Functions
+-----------------------
+init()
+    Parameters
+        name - name of the combatant default
+        hit_points - integer of the total hit points
+        hit_chance - chance to hit the other Combatant
+        max_damage - base maximum damage allowed in an attack
+        armor - protection that will be used to adjust any incoming damage
+    
+    set __name = name
+    set __hit_points = testInt(hit_points, min=1, default=1)
+    set __hit_chance = testInt(hit_chance,min=1)
+    set __max_damage = testInt(max_damage,min=1)
+    set __armor = testInt(armor,min=1)
+
+get_name()
+    return __name variable
+
+get_hit_points()
+    return __hit_points
+
+get_hit_chance()
+    return __hit_chance
+
+get_max_damage()
+    return __max_damage
+
+get_armor()
+    return __armor
+
+print_stats()
+    return string showing name,hit_points,hit_chance,max_damage,armor formatted nicely
+
+---------------------------------------------------------
+Combat class
+---------------------------------------------------------
+
+Static Functions
+-----------------------
+take_turn(attacker, defender):
+        print attackers turn
+        get attackers damage
+        apply attackers damage to defender
+        if the defenders hit_points are 0
+            print attacker wins
+        
+fight(character1, character2):
+    Parameters:
+        character1 as Character type
+        character2 as Character type
+    
+    print each characters stats
+    
+    create variable keepGoing and default to True
+    create variable round and default to 1
+
+    while(keepGoing):
+        print round
+
+        take character1 turn
+        if character2 hitpoints are 0:
+            set keepGoing to False
+        else:
+            take character2 turn
+            
+            if character1 hit points are 0:
+                keepGoing = False
+        wait for key press to continue
+        set round to round plus 1
+
+
+---------------------------------------------------------
+main
+---------------------------------------------------------
+create a variable named hero = new Character("Hero",10,50,5,2)
+create a variable named monster = new Character("Monster",20,30,5,0)
+call the combat class static fight(hero,monster) passing hero and monster
