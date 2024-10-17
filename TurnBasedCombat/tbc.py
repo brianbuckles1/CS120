@@ -117,47 +117,8 @@ class Character():
         
         print(f"{self.get_name()} has {self.get_hit_points()} hit points left!")
 
-    def take_turn(self, defender)->bool:
-        """ characters turn to apply damage and returns a
-            boolean if character wins.  This is true if 
-            the defender's hit points are 0.
-        """
-        print(f"\n{self.get_name()} turn:")
-        defender.apply_damage(self.get_attack())
-        if defender.get_hit_points() == 0:
-            print(f"{self.get_name()} wins!")
-        
-@staticmethod
-def fight(character1:Character, character2:Character):
-    """ pit two characters together and have them fight
-        until one character run out of hit points.
-        Returns the winning character"""
-
-    character1.print_stats()
-    character2.print_stats()
-    
-    keepGoing = True
-    round = 1
-
-    while(keepGoing):
-        print(f"\nRound {round}:")
-
-        character1.take_turn(character2)
-        if character2.get_hit_points() == 0:
-            keepGoing = False
-        else:
-            character2.take_turn(character1)
-            
-            if character1.get_hit_points() == 0:
-                keepGoing = False
-        input("press any key to continue.")
-        round += 1
-
 def main():
     hero = Character("Hero",10,50,5,2)
-    monster = Character("Monster",20,30,5,0)
-    fight(hero,monster)
-
 
 if __name__ == "__main__":
     main()
