@@ -49,72 +49,47 @@ get_armor()
 print_stats()
     return string showing name,hit_points,hit_chance,max_damage,armor formatted nicely
 
-attack()
-    create a variable damage and set to 0
-    create a variable calculated_hit and set it to a random number from 1 to 100
-    if calculated_hit > __hit_chance
-        set damage to a random integer from 1 to __max_damage
-        print __name attacks for damage variable value
-    else
-        print missed
-    returns damage integer
-
-apply_damage(incoming_damage)
-    Parameters
-        incoming_damage is equal to the total amount of damage to take
-
-    create a variable total_damage_taken = 0
-    if incoming_damage >= __armor
-        total_damage_taken = incoming_damage - __armor
-    create a variable total_absorbed = incoming_damage - total_damage_taken
-
-    print __name absorbs total_absorbed variable value
-    print __name takes total_damage_taken variable value
-
-    set __hit_points = __hit_points - total_damage
-
-    if __hit_points <0
-        set __hit_points = 0
-
-take_turn(defender)
-    Parameters
-        defender - of type character
-    
-    print Turn
-    call defender apply_damage and pass attack results
-    if defender has points are 0
-        print character get_name() wins
-
-
 ---------------------------------------------------------
 Combat class
 ---------------------------------------------------------
 
 Static Functions
 -----------------------
-fight(combatant1, combatant2)
-    Parameters
-     combatant1 - Character type
-     combatant2 - Character type
+take_turn(attacker, defender):
+        print attackers turn
+        get attackers damage
+        apply attackers damage to defender
+        if the defenders hit_points are 0
+            print attacker wins
+        
+fight(character1, character2):
+    Parameters:
+        character1 as Character type
+        character2 as Character type
+    
+    print each characters stats
+    
+    create variable keepGoing and default to True
+    create variable round and default to 1
 
-     keepGoing boolean default to false.
-     while keepGoing
-        combatant2.apply_damage(combatant1.attack())
-        if combatant2.get_hit_points == 0
-            print combatant.get_name() wins
-            keepGoing = false
-        else 
-            combatant1.apply_damage(combatant2.attack())
+    while(keepGoing):
+        print round
+
+        take character1 turn
+        if character2 hitpoints are 0:
+            set keepGoing to False
+        else:
+            take character2 turn
             
-            if combatant1.get_hit_points == 0
-                print combatant2.get_name() wins
-                keepGoing = false
-
+            if character1 hit points are 0:
+                keepGoing = False
+        wait for key press to continue
+        set round to round plus 1
 
 
 ---------------------------------------------------------
 main
 ---------------------------------------------------------
-create a variable named hero = new Combatant("Hero",10,50,5,2)
-create a variable named monster = new Combatant("Monster",20,30,5,0)
+create a variable named hero = new Character("Hero",10,50,5,2)
+create a variable named monster = new Character("Monster",20,30,5,0)
 call the combat class static fight(hero,monster) passing hero and monster
