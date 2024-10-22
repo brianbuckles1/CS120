@@ -1,0 +1,44 @@
+Basic Animation
+Brian Buckles
+10/20/2024
+
+Description
+--------------------------------------------------------
+Create a pygame that uses a soccerfield as a background and use a soccerball to bounce around.
+
+Main()
+--------------------------------------------------------
+Import pygame library
+Initialize the game library
+create a screen variable for storing the pygame display
+set the caption for the application to "Relaxing Soccer"
+
+create the field variable and load the assets/field.jpg image
+rotate image 90 degrees
+scale image to display size
+
+create the ball variable and load the assets/ball.png
+scale the ball to 50 width and 50 height
+create ball_x to store the horizontal location
+create ball_y to store the vertical location
+create ball_x_dir to store the horizontal direction and set to 1
+create ball_y_dir to store the vertical direction and set to 1
+
+create a clock variable as set to teh pygame library Clock class
+create a keep_going boolean variable and default to True
+
+while keep_going
+    clock to 30 frames
+
+    set the ball_x variable = ball_x + (5 * ball_x_dir)
+    set the ball_y variable = ball_y + (5 * ball_y_dir)
+
+    if ball_x < 0:
+        change direction by setting the ball_x_dir = ball_x_dir * -1
+    if ball_x < screen.get_height()-50 # which is the size of the ball
+        change direction by setting the ball_x_dir = ball_x_dir * -1
+
+    if ball_y < 0:
+        change direction by setting the ball_y_dir = ball_y_dir * -1
+    if ball_y < screen.get_height()-50 # which is the size of the ball
+        change direction by setting the ball_y_dir = ball_y_dir * -1
