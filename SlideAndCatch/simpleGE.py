@@ -613,13 +613,19 @@ class Label(pygame.sprite.Sprite):
     
     def __init__(self, fontName = "freesansbold.ttf"):
         pygame.sprite.Sprite.__init__(self)
-        self.font = pygame.font.Font(fontName, 20)
+        self.font_name = fontName
+        self.font_size = 20
+        self.font = pygame.font.Font(self.font_name, self.font_size)
         self.text = ""
         self.fgColor = ((0xFF, 0xFF, 0xFF))
         self.bgColor = ((0x00, 0x00, 0x00))
         self.center = (100, 100)
         self.size = (150, 30)
         self.clearBack = False
+
+    def set_font_size(self,font_size:int):
+        self.font_size = font_size
+        self.font = pygame.font.Font(self.font_name, self.font_size)
         
     def update(self):
         self.checkEvents()

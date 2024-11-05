@@ -1,6 +1,6 @@
 from tabnanny import check
 
-import simpleGE, sprites.miner,sprites.minerals, random
+import simpleGE, sprites.miner,sprites.minerals, sprites.life, random
 """
     Game class
 """
@@ -19,21 +19,33 @@ class Game(simpleGE.Scene):
         # setup scene
         self.setImage("assets/mine.png")
         self.setCaption("Gem Catcher")
-        self.score = 0
-        self.lives = 3
-        self.totalMinerals = 10
+        self.__score = 0
+        self.__lives_left = 3
+        self.__totalMinerals = 10
         self.sprites = []
         self.gems = []
         self.rocks = []
+
+        self.lives = []
+        self.__first_life = sprites.life.Life(self)
+        self.lives.append(self.__first_life)
+        self.sprites.append(self.__first_life)
+        self.__second_life = sprites.life.Life(self,(680,40))
+        self.lives.append(self.__second_life)
+        self.sprites.append(self.__second_life)
+        self.__third_life = sprites.life.Life(self, (610, 40))
+        self.lives.append(self.__third_life)
+        self.sprites.append(self.__third_life)
+
         self.sndGem = simpleGE.Sound("assets/bing1.wav")
         self.sndRock = simpleGE.Sound("assets/thud2.wav")
 
         # create the miner sprite
-        self.miner = sprites.miner.Miner(self)
-        self.sprites.append(self.miner)
+        self.__miner = sprites.miner.Miner(self)
+        self.sprites.append(self.__miner)
 
         # create minerals
-        for i in range(self.totalMinerals):
+        for i in range(self.__totalMinerals):
             mineral_type = random.randint(1, 2)
             if mineral_type % 2 == 0:
                 gem = sprites.minerals.Gem(self)
@@ -51,14 +63,20 @@ class Game(simpleGE.Scene):
         :return: void
         """
         for gem in self.gems:
-            if gem.collidesWith(self.miner):
-                self.score += 1
+            if gem.collidesWith(self.__miner):
+                self.__score += 1
                 self.sndGem.play()
                 gem.reset()
 
         for rock in self.rocks:
-            if rock.collidesWith(self.miner):
-                self.lives -= 1
+            if rock.collidesWith(self.__miner):
+                self.__lives_left -= 1
+                self.lives[self.__lives_left].hide()
                 self.sndRock.play()
                 rock.reset()
 
+            if self.__lives_left <= 0:
+                self.stop()
+
+    def get_score(self):
+        return self.__score
