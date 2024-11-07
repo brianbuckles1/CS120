@@ -65,6 +65,10 @@ class MainMenu(simpleGE.Scene):
         self.sprites.append(self.btn_quit)
 
     def process(self):
+        """
+        process the current frame
+        :return:
+        """
         if self.btn_quit.clicked:
             self.__command = "quit"
             self.stop()
@@ -73,7 +77,16 @@ class MainMenu(simpleGE.Scene):
             self.stop()
 
     def get_command(self)->str:
+        """
+        get the command of the button pressed
+        :return: string command
+        """
         return self.__command
 
     def set_high_score(self, high_score:int = 0):
+        """
+        set the high score for the menu
+        :param high_score: integer of the score to display as the high score
+        :return:
+        """
         self.__high_score = high_score
