@@ -21,7 +21,8 @@ class Game(simpleGE.Scene):
         self.setCaption("Gem Catcher")
         self.__score = 0
         self.__lives_left = 3
-        self.__totalMinerals = 10
+        self.__total_gems = 5
+        self.__total_rocks = 5
         self.sprites = []
         self.gems = []
         self.rocks = []
@@ -44,17 +45,25 @@ class Game(simpleGE.Scene):
         self.__miner = sprites.miner.Miner(self)
         self.sprites.append(self.__miner)
 
-        # create minerals
-        for i in range(self.__totalMinerals):
-            mineral_type = random.randint(1, 2)
-            if mineral_type % 2 == 0:
-                gem = sprites.minerals.Gem(self)
-                self.sprites.append(gem)
-                self.gems.append(gem)
-            else:
-                rock = sprites.minerals.Rock(self)
-                self.sprites.append(rock)
-                self.rocks.append(rock)
+        # create score label
+        self.lbl_score = simpleGE.Label()
+        self.lbl_score.set_font_size(30)
+        self.lbl_score.size = (250,50)
+        self.lbl_score.center = (100,28)
+        self.lbl_score.text="Score: 0"
+        self.sprites.append(self.lbl_score)
+
+        # create gems
+        for i in range(self.__total_gems):
+            gem = sprites.minerals.Gem(self)
+            self.sprites.append(gem)
+            self.gems.append(gem)
+
+        for i in range(self.__total_rocks):
+            rock = sprites.minerals.Rock(self)
+            self.sprites.append(rock)
+            self.rocks.append(rock)
+                
 
     def process(self):
         """
@@ -62,6 +71,10 @@ class Game(simpleGE.Scene):
         Process the next frame cycle
         :return: void
         """
+
+        # create score label
+        self.lbl_score.text=f"Score: {self.__score}"
+
         for gem in self.gems:
             if gem.collidesWith(self.__miner):
                 self.__score += 1
@@ -78,5 +91,9 @@ class Game(simpleGE.Scene):
             if self.__lives_left <= 0:
                 self.stop()
 
-    def get_score(self):
+    def get_score(self)->int:
+        """
+        get the score for the game
+        :return: int
+        """
         return self.__score
