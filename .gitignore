@@ -1,3 +1,6 @@
+# jetbrains
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -162,3 +165,5 @@ cython_debug/
 #.idea/
 Final/.~lock.DesignDocument.docx#
 Final/.~lock.DesignDocument.odt#
+.idea/misc.xml
+.idea/misc.xml

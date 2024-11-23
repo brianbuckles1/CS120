@@ -1,0 +1,61 @@
+Authors: bluecarrot16, Evert, TheraHedwig, MuffinElZangano, Durrani, Sander Frenken (castelonia), Benjamin K. Smith (BenCreating), Eliza Wyatt (ElizaWy), dalonedrau, Stephen Challener (Redshrike), Fabzy, JaidynReiman, Joe White, Matthew Krohn (makrohn), Johannes Sjölund (wulax)
+
+- body/bodies/muscular/light.png: by bluecarrot16, Evert, TheraHedwig, MuffinElZangano, Durrani, Sander Frenken (castelonia), Benjamin K. Smith (BenCreating), Eliza Wyatt (ElizaWy), dalonedrau, Stephen Challener (Redshrike). License(s): . see details at https://opengameart.org/content/lpc-character-bases
+    - https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+    - https://opengameart.org/content/lpc-barbarian-sprite-base
+    - https://opengameart.org/content/lpc-muscular-swing-animation
+    - https://opengameart.org/content/lpc-muscular-hurt-animation
+    - https://opengameart.org/content/lpc-jump-expanded
+
+- head/heads/human/male/light.png: by bluecarrot16, Benjamin K. Smith (BenCreating), Stephen Challener (Redshrike). License(s): OGA-BY 3.0, CC-BY-SA 3.0, GPL 3.0. original head by Redshrike; tweaks by BenCreating; modular version by bluecarrot16
+    - https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+    - https://opengameart.org/content/lpc-character-bases
+
+- hair/spiked_porcupine/male/chestnut.png: by Fabzy, bluecarrot16. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/the-revolution-hair
+    - https://opengameart.org/content/lpc-hair
+
+- legs/pants/male/brown.png: by bluecarrot16, JaidynReiman, Joe White, Matthew Krohn (makrohn), Johannes Sjölund (wulax). License(s): CC-BY-SA 3.0, GPL 3.0. 
+    - https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+
+- feet/boots_plating/universal/male/bronze.png: by JaidynReiman. License(s): OGA-BY 3.0+, CC-BY 3.0+, GPL 3.0. 
+    - https://opengameart.org/content/lpc-relm-outfit-pieces-2-kimonos-2-sleeves-2-boots-tabi-socks
+
+- shield/spartan/bg/spartan.png: by bluecarrot16, Sander Frenken (castelonia). License(s): OGA-BY 3.0. 
+    - https://opengameart.org/content/lpc-shields
+
+- shield/spartan/fg/male/spartan.png: by bluecarrot16, Sander Frenken (castelonia). License(s): OGA-BY 3.0. 
+    - https://opengameart.org/content/lpc-shields
+
+- weapon/sword/longsword/longsword.png: by Johannes Sjölund (wulax), bluecarrot16. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-extended-weapon-animations
+
+- weapon/sword/longsword/universal_behind/longsword.png: by Johannes Sjölund (wulax), bluecarrot16. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-extended-weapon-animations
+
+- weapon/sword/longsword/attack_slash/behind/longsword.png: by Johannes Sjölund (wulax), bluecarrot16. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-extended-weapon-animations
+
+- weapon/sword/longsword/attack_slash/longsword.png: by Johannes Sjölund (wulax), bluecarrot16. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-extended-weapon-animations
+
+- weapon/sword/longsword/attack_slash_reverse/behind/longsword.png: by Johannes Sjölund (wulax), bluecarrot16. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-extended-weapon-animations
+
+- weapon/sword/longsword/attack_slash_reverse/longsword.png: by Johannes Sjölund (wulax), bluecarrot16. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-extended-weapon-animations
+
+- weapon/sword/longsword/attack_thrust/behind/longsword.png: by Johannes Sjölund (wulax), bluecarrot16. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-extended-weapon-animations
+
+- weapon/sword/longsword/attack_thrust/longsword.png: by Johannes Sjölund (wulax), bluecarrot16. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-extended-weapon-animations
