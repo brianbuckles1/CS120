@@ -9,7 +9,7 @@ def main():
         main_menu.start()
 
         if main_menu.get_command() == "play":
-            game = scenes.game.Game((800,600))
+            game = scenes.game.Game()
             game.start()
 
             if game.get_score() > high_score:

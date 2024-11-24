@@ -937,6 +937,13 @@ class SpriteSheet():
                 self.animCol = self.startCol
         return (self.getCellImage(self.animCol, self.animRow))
 
+    def isDone(self):
+        """ returns true if the animation is finished """
+        if self.animCol >= self.NUMCOLS - 1:
+            return True
+        else:
+            return False
+
 
 
 class BasicSprite(pygame.sprite.Sprite):
