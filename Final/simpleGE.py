@@ -599,6 +599,22 @@ class Sprite(pygame.sprite.Sprite):
         self.screen.blit(self.scene.background, (0, 0))
         self.oldCenter = self.position
 
+    def moveTowardSprite(self, target):
+        """ moves sprite toward another sprite """
+        # Calculate the direction vector
+        dir_x = target.x - self.x
+        dir_y = target.y - self.y
+        distance = (dir_x ** 2 + dir_y ** 2) ** 0.5
+
+        if distance != 0:
+            dir_x /= distance
+            dir_y /= distance
+
+        # Update enemy position
+        self.dx = dir_x * self.speed
+        self.dy = dir_y * self.speed
+
+
 class Label(pygame.sprite.Sprite):
     """ a basic label 
         properties: 
@@ -613,19 +629,25 @@ class Label(pygame.sprite.Sprite):
     
     def __init__(self, fontName = "freesansbold.ttf"):
         pygame.sprite.Sprite.__init__(self)
-        self.font = pygame.font.Font(fontName, 20)
+        self.font_name = fontName
+        self.font_size = 20
+        self.font = pygame.font.Font(self.font_name, self.font_size)
         self.text = ""
         self.fgColor = ((0xFF, 0xFF, 0xFF))
         self.bgColor = ((0x00, 0x00, 0x00))
         self.center = (100, 100)
         self.size = (150, 30)
         self.clearBack = False
-        
+
+    def set_font_size(self,font_size:int):
+        self.font_size = font_size
+        self.font = pygame.font.Font(self.font_name, self.font_size)
+
     def update(self):
         self.checkEvents()
         self.process()
         self.image = pygame.Surface(self.size, pygame.SRCALPHA)
-        
+
         if self.clearBack:
             fontSurface = self.font.render(self.text, True, self.fgColor)
             self.image.set_alpha(255)
@@ -635,31 +657,31 @@ class Label(pygame.sprite.Sprite):
 
         #center the text
         xPos = (self.image.get_width() - fontSurface.get_width())/2
-        
+
         self.image.blit(fontSurface, (xPos, 5))
-            
+
         self.rect = self.image.get_rect()
         self.rect.center = self.center
-        
+
     def checkEvents(self):
         pass
-    
+
     def process(self):
         pass
-    
+
     def hide(self):
         self.oldPosition = self.center
         self.center = (-1000, -1000)
-    
+
     def show(self):
         self.center = self.oldPosition
 
 class Button(Label):
-    """ a button based on the label 
+    """ a button based on the label
         same properties as label +
         active: True if user is clicking on sprite
                 False if user is not currently clicking
-        clicked: True when user releases mouse over a 
+        clicked: True when user releases mouse over a
                  currently active button
     """
 
@@ -669,10 +691,10 @@ class Button(Label):
         self.clicked = False
         self.fgColor = (0x00, 0x00, 0x00)
         self.bgColor = (0xCC, 0xCC, 0xCC)
-    
+
     def update(self):
         Label.update(self)
-        
+
         self.clicked = False
 
         #check for mouse input
@@ -688,29 +710,29 @@ class Button(Label):
                     self.clicked = True
 
 class TxtInput(Button):
-    """ Simple text input 
+    """ Simple text input
         Click on input to get to edit mode
         will switch background to activeColor
         delete to clear box, backspace to back up
         text will be available as a property.
         Note readkeys needs an event object
-        so it must be called from scene's 
+        so it must be called from scene's
         doEvents() method
     """
-    
+
     def __init__(self):
         super().__init__()
         self.takingInput = False
         self.activeColor = pygame.Color("yellow")
         self.standardColor = self.bgColor
-        
+
     def readKeys(self, event):
-        
+
         if self.takingInput:
             self.bgColor = pygame.Color("yellow")
         else:
             self.bgColor = self.standardColor
-        
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
                 self.takingInput = not self.takingInput
@@ -727,7 +749,7 @@ class TxtInput(Button):
                     self.text += event.unicode
 
 class Scroller(Button):
-    """ like a button, but has a numeric value that 
+    """ like a button, but has a numeric value that
         can be decremented by clicking on left half
         and incremented by clicking on right half.
         new atributes:
@@ -737,7 +759,7 @@ class Scroller(Button):
             increment: How much is added or subtracted
             format: format of string interpolation
     """
-    
+
     def __init__(self):
         Button.__init__(self)
         self.minValue = 0
@@ -745,7 +767,7 @@ class Scroller(Button):
         self.increment = 1
         self.value = 5
         self.format = f"<<  {self.value}  >>"
-        
+
     def update(self):
         Button.update(self)
         if self.active:
@@ -763,14 +785,14 @@ class Scroller(Button):
 
 class MultiLabel(pygame.sprite.Sprite):
     """ accepts a list of strings, creates a multi-line
-        label to display text 
+        label to display text
         same properties as label except textLines
         is a list of strings. There is no text
         property.
-        Set the size manually. Vertical size should be at 
+        Set the size manually. Vertical size should be at
         least 30 pixels per line (with the default font)
     """
-    
+
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.textLines = ["This", "is", "sample", "text"]
@@ -781,7 +803,7 @@ class MultiLabel(pygame.sprite.Sprite):
         self.size = (150, 100)
         self.clicked = False
         self.active = False
-        
+
     def update(self):
         self.checkEvents()
         self.process()
@@ -789,7 +811,7 @@ class MultiLabel(pygame.sprite.Sprite):
         self.image.fill(self.bgColor)
         numLines = len(self.textLines)
         vSize = self.image.get_height() / numLines
-        
+
         for lineNum in range(numLines):
             currentLine = self.textLines[lineNum]
             fontSurface = self.font.render(currentLine, True, self.fgColor, self.bgColor)
@@ -797,12 +819,12 @@ class MultiLabel(pygame.sprite.Sprite):
             xPos = (self.image.get_width() - fontSurface.get_width())/2
             yPos = lineNum * vSize
             self.image.blit(fontSurface, (xPos, yPos + 15))
-        
+
         self.rect = self.image.get_rect()
         self.rect.center = self.center
-        
+
         self.clicked = False
-        
+
         #check for mouse input
         if pygame.mouse.get_pressed() == (1, 0, 0):
             if self.rect.collidepoint(pygame.mouse.get_pos()):
@@ -817,17 +839,17 @@ class MultiLabel(pygame.sprite.Sprite):
 
     def checkEvents(self):
         pass
-    
+
     def process(self):
         pass
-    
+
     def hide(self):
         self.oldCenter = self.center
         self.center = (-1000, -1000)
-        
+
     def show(self):
         self.center = self.oldCenter
-        
+
 class Timer(object):
   def __init__(self):
     super().__init__()
@@ -836,7 +858,7 @@ class Timer(object):
 
   def start(self):
     self.__startTime = time.time()
-    
+
   def getElapsedTime(self):
     self.__now = time.time()
     elapsedTime = self.__now - self.__startTime
@@ -856,15 +878,15 @@ class Sound(object):
 
 class SpriteSheet():
     """ handles basic character animation """
-    
+
     def __init__(self, imageFile, cellSize, numRows, numCols, delay = .1):
-        """ requires 
+        """ requires
           * imageFile: master image file name
           * cellSize: size of one cell in pixels (width, height)
           * numRows: number of animation rows
           * numCols: number of animation columns
           * delay: gap (in seconds) between animation flips
-          
+
           Note that the animation must be regular and rectangular
           (that is all rows have same number of columns, and all
            cells are the same size)
@@ -873,10 +895,10 @@ class SpriteSheet():
           You can use more than one animation object if you have
           different cell sizes or counts.
         """
-        
+
         self.offset = (0, 0)
         self.imageFileName = imageFile
-        self.cellSize = cellSize        
+        self.cellSize = cellSize
         self.NUMROWS = numRows
         self.NUMCOLS = numCols
         self.delay = delay
@@ -887,19 +909,19 @@ class SpriteSheet():
 
         self.animImage = pygame.image.load(self.imageFileName)
         self.animImage.convert_alpha()
-        
+
     def getCellImage(self, row, col):
         """ given a row and column, returns the appropriate sub-image """
         imgOut = pygame.Surface(self.cellSize, pygame.SRCALPHA)
-        
+
         cellWidth = self.cellSize[0]
         cellHeight = self.cellSize[1]
-        
+
         cellX = self.offset[0] + (row * cellWidth)
         cellY = self.offset[1] + (col * cellHeight)
-        
+
         sourceRect = pygame.Rect(cellX, cellY, cellWidth, cellHeight)
-        
+
         imgOut.blit(self.animImage, (0, 0), sourceRect)
 
         return(imgOut)
@@ -919,7 +941,7 @@ class SpriteSheet():
 
 class BasicSprite(pygame.sprite.Sprite):
     """ ***DEPRECATED - Please use simpleGE.Sprite instead ***
-        use this sprite when you want to 
+        use this sprite when you want to
         directly control the sprite with dx and dy
         or want to extend in another direction than SuperSprite
     """
@@ -938,37 +960,37 @@ class BasicSprite(pygame.sprite.Sprite):
         self.dy = 0
         self.visible = True
 
-    @property 
+    @property
     def x(self):
         return self.__x
-    
-    @x.setter 
+
+    @x.setter
     def x(self, value):
         self.__x = value
         self.rect.centerx = self.__x
 
-    @property 
+    @property
     def y(self):
         return self.__y
-    
-    @y.setter 
+
+    @y.setter
     def y(self, value):
         self.__y = value
         self.rect.centery = self.__y
 
-    @property 
+    @property
     def dx(self):
         return self.__dx
-    
-    @dx.setter 
+
+    @dx.setter
     def dx(self, value):
         self.__dx = value
 
-    @property 
+    @property
     def dy(self):
         return self.__dy
-    
-    @dy.setter 
+
+    @dy.setter
     def dy(self, value):
         self.__dy = value
 
@@ -979,7 +1001,7 @@ class BasicSprite(pygame.sprite.Sprite):
         self.checkBounds()
         self.rect.center = (self.x, self.y)
         self.checkEvents()
-        
+
     def checkBounds(self):
         scrWidth = self.screen.get_width()
         scrHeight = self.screen.get_height()
@@ -992,11 +1014,11 @@ class BasicSprite(pygame.sprite.Sprite):
                 self.y = 0
             if self.y < 0:
                 self.y = scrHeight
-            
+
     def setSize(self, newX, newY):
         self.image = pygame.transform.scale(self.image, (newX, newY))
         self.rect = self.image.get_rect()
-        
+
     def setImage (self, imageFile):
         """ loads the given file name as the master image
             default setting should be facing east.  Image
@@ -1007,7 +1029,7 @@ class BasicSprite(pygame.sprite.Sprite):
         else:
           self.image = self.image.convert()
         self.rect = self.image.get_rect()
-          
+
     def collidesWith(self, target):
         """ boolean function. Returns True if the sprite
             is currently colliding with the target sprite,
@@ -1029,16 +1051,16 @@ class BasicSprite(pygame.sprite.Sprite):
         self.x = -1000
         self.y = -1000
         self.visible = False
-        
+
     def show(self):
         self.visible = True
         self.x = self.oldPosition[0]
         self.y = self.oldPosition[1]
-        
+
 
 class SuperSprite(pygame.sprite.Sprite):
     """ *** DEPRECATED - Please use simpleGE.Sprite instead ***
-    
+
         An enhanced Sprite class
         expects a gameEngine.Scene class as its one parameter
         Use methods to change image, direction, speed
@@ -1051,21 +1073,21 @@ class SuperSprite(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.scene = scene
         self.screen = scene.screen
-        
+
         #create constants
         self.WRAP = 0
         self.BOUNCE = 1
         self.STOP = 2
         self.HIDE = 3
         self.CONTINUE = 4
-        
+
         #create a default text image as a placeholder
         #This will usually be changed by a setImage call
         self.font = pygame.font.Font("freesansbold.ttf", 30)
         self.imageMaster = self.font.render(">sprite>", True, (0, 0,0), (0xFF, 0xFF, 0xFF))
         self.image = self.imageMaster
         self.rect = self.image.get_rect()
-        
+
         #create properties
         #most will be changed through method calls
         self.x = 200
@@ -1081,7 +1103,7 @@ class SuperSprite(pygame.sprite.Sprite):
         self.pressed = False
         self.oldCenter = (100, 100)
         self.visible = True
-    
+
     def update(self):
         self.oldCenter = self.rect.center
         self.checkEvents()
@@ -1090,17 +1112,17 @@ class SuperSprite(pygame.sprite.Sprite):
         self.__calcPosition()
         self.checkBounds()
         self.rect.center = (self.x, self.y)
-    
+
     def checkEvents(self):
         """ overwrite this method to add your own event code """
         pass
 
     def __rotate(self):
         """ PRIVATE METHOD
-            change visual orientation based on 
+            change visual orientation based on
             rotation property.
             automatically called in update.
-            change rotation property directly or with 
+            change rotation property directly or with
             rotateBy(), setAngle() methods
         """
         oldCenter = self.rect.center
@@ -1108,16 +1130,16 @@ class SuperSprite(pygame.sprite.Sprite):
         self.image = pygame.transform.rotate(self.imageMaster, self.rotation)
         self.rect = self.image.get_rect()
         self.rect.center = oldCenter
-    
+
     def __calcVector(self):
         """ calculates dx and dy based on speed, dir
-            automatically called in update() 
+            automatically called in update()
         """
         theta = self.dir / 180.0 * math.pi
         self.dx = math.cos(theta) * self.speed
         self.dy = math.sin(theta) * self.speed
         self.dy *= -1
-    
+
     def __calcPosition(self):
         """ calculates the sprites position adding
             dx and dy to x and y.
@@ -1127,25 +1149,25 @@ class SuperSprite(pygame.sprite.Sprite):
         self.y += self.dy
 
     def checkBounds(self):
-        """ checks boundary and acts based on 
+        """ checks boundary and acts based on
             self.BoundAction.
             WRAP: wrap around screen (default)
             BOUNCE: bounce off screen
             STOP: stop at edge of screen
             HIDE: move off stage and wait
             CONTINUE: keep going at present course and speed
-            
+
             automatically called by update()
         """
-        
+
         # ignore boundaries if we are hidden
         if self.visible:
             scrWidth = self.screen.get_width()
             scrHeight = self.screen.get_height()
-            
+
             #create variables to simplify checking
             offRight = offLeft = offTop = offBottom = offScreen = False
-            
+
             if self.x > scrWidth:
                 offRight = True
             if self.x < 0:
@@ -1154,10 +1176,10 @@ class SuperSprite(pygame.sprite.Sprite):
                 offBottom = True
             if self.y < 0:
                 offTop = True
-                
+
             if offRight or offLeft or offTop or offBottom:
                 offScreen = True
-            
+
             if self.boundAction == self.WRAP:
                 if offRight:
                     self.x = 0
@@ -1167,34 +1189,34 @@ class SuperSprite(pygame.sprite.Sprite):
                     self.y = 0
                 if offTop:
                     self.y = scrHeight
-            
+
             elif self.boundAction == self.BOUNCE:
                 if offLeft or offRight:
                     self.dx *= -1
                 if offTop or offBottom:
                     self.dy *= -1
-                    
+
                 self.updateVector()
                 #self.rotation = self.dir
-            
+
             elif self.boundAction == self.STOP:
                 if offScreen:
                     self.speed = 0
-            
+
             elif self.boundAction == self.HIDE:
                 if offScreen:
                     self.speed = 0
                     self.setPosition((-1000, -1000))
-            
+
             elif self.boundAction == self.CONTINUE:
                 pass
-                
+
             else:
                 # assume it's CONTINUE - keep going forever
-                pass    
-    
+                pass
+
     def setSpeed(self, speed):
-        """ immediately sets the objects speed to the 
+        """ immediately sets the objects speed to the
             given value.
         """
         self.speed = speed
@@ -1208,20 +1230,20 @@ class SuperSprite(pygame.sprite.Sprite):
             self.speed = self.minSpeed
         if self.speed > self.maxSpeed:
             self.speed = self.maxSpeed
-    
+
     def setAngle(self, dir):
-        """ sets both the direction of motion 
+        """ sets both the direction of motion
             and visual rotation to the given angle
-            If you want to set one or the other, 
+            If you want to set one or the other,
             set them directly. Angle measured in degrees
-        """            
+        """
         self.dir = dir
         self.rotation = dir
-    
+
     def turnBy (self, amt):
         """ turn by given number of degrees. Changes
             both motion and visual rotation. Positive is
-            counter-clockwise, negative is clockwise 
+            counter-clockwise, negative is clockwise
         """
         self.dir += amt
         if self.dir > 360:
@@ -1229,26 +1251,26 @@ class SuperSprite(pygame.sprite.Sprite):
         if self.dir < 0:
             self.dir = 360 - amt
         self.rotation = self.dir
-    
+
     def rotateBy(self, amt):
         """ change visual orientation by given
             number of degrees. Does not change direction
-            of travel. 
+            of travel.
         """
         self.rotation += amt
         if self.rotation > 360:
             self.rotation = amt
         if self.rotation < 0:
             self.rotation = 360 - amt
-            
+
     def setImageAngle(self, amt):
         """ convenience function for compatibility with simpleGame """
         self.rotation = amt
-        
+
     def setMoveAngle(self, amt):
         """ convenience function for compatibility with simplegame """
         self.dir = amt
-    
+
     def setImage (self, image):
         """ loads the given file name as the master image
             default setting should be facing east.  Image
@@ -1258,17 +1280,17 @@ class SuperSprite(pygame.sprite.Sprite):
           self.imageMaster = self.imageMaster.convert_alpha()
         else:
           self.imageMaster = self.imageMaster.convert()
-    
+
     def setDX(self, dx):
         """ changes dx value and updates vector """
         self.dx = dx
         self.updateVector()
-    
+
     def addDX(self, amt):
         """ adds amt to dx, updates vector """
         self.dx += amt
         self.updateVector()
-        
+
     def setDY(self, dy):
         """ changes dy value and updates vector """
         self.dy = dy
@@ -1278,14 +1300,14 @@ class SuperSprite(pygame.sprite.Sprite):
         """ adds amt to dy and updates vector """
         self.dy += amt
         self.updateVector()
-    
+
     def setComponents(self, components):
         """ expects (dx, dy) for components
             change speed and angle according to dx, dy values """
-            
+
         (self.dx, self.dy) = components
         self.updateVector()
-        
+
     def setBoundAction (self, action):
         """ sets action for boundary.  Values are
             self.WRAP (wrap around edge - default)
@@ -1304,10 +1326,10 @@ class SuperSprite(pygame.sprite.Sprite):
         (self.x, self.y) = position
         #update the rect
         self.rect.center = self.x, self.y
-        
+
     def moveBy (self, vector):
         """ move the sprite by the (dx, dy) values in vector
-            automatically calls checkBounds. Doesn't change 
+            automatically calls checkBounds. Doesn't change
             speed or angle settings.
         """
         (dx, dy) = vector
@@ -1319,15 +1341,15 @@ class SuperSprite(pygame.sprite.Sprite):
         """ move amt pixels in the current direction
             of travel
         """
-        
+
         #calculate dx dy based on current direction
         radians = self.dir * math.pi / 180
         dx = amt * math.cos(radians)
         dy = amt * math.sin(radians) * -1
-        
+
         self.x += dx
         self.y += dy
-        
+
     def addForce(self, amt, angle):
         """ apply amt of thrust in angle.
             change speed and dir accordingly
@@ -1341,20 +1363,20 @@ class SuperSprite(pygame.sprite.Sprite):
         radians = angle * math.pi / 180
         dx = amt * math.cos(radians)
         dy = amt * math.sin(radians) * -1
-        
+
         self.dx += dx
         self.dy += dy
         self.updateVector()
-        
+
     def updateVector(self):
         #calculate new speed and angle based on dx, dy
         #call this any time you change dx or dy
-        
+
         self.speed = math.sqrt((self.dx * self.dx) + (self.dy * self.dy))
-        
+
         dy = self.dy * -1
         dx = self.dx
-        
+
         radians = math.atan2(dy, dx)
         self.dir = radians / math.pi * 180
 
@@ -1377,14 +1399,14 @@ class SuperSprite(pygame.sprite.Sprite):
         """
         #print "x: %d, y: %d, speed: %.2f, dir: %.f, dx: %.2f, dy: %.2f" % \
         #      (self.x, self.y, self.speed, self.dir, self.dx, self.dy)
-        
+
         print(f"""
               x: {self.x}, y: {self.y}
               speed: {self.speed}, dir: {self.dir}
               dx: {self.dx}, dy: {self.dy}""")
-            
+
     def mouseDown(self):
-        """ boolean function. Returns True if the mouse is 
+        """ boolean function. Returns True if the mouse is
             clicked over the sprite, False otherwise
         """
         self.pressed = False
@@ -1392,11 +1414,11 @@ class SuperSprite(pygame.sprite.Sprite):
             if self.rect.collidepoint(pygame.mouse.get_pos()):
                 self.pressed = True
         return self.pressed
-    
+
     def clicked(self):
         """ Boolean function. Returns True only if mouse
             is pressed and released over sprite
-            
+
         """
         released = False
         if self.pressed:
@@ -1404,7 +1426,7 @@ class SuperSprite(pygame.sprite.Sprite):
                 if self.rect.collidepoint(pygame.mouse.get_pos()):
                     released = True
             return released
-        
+
     def collidesWith(self, target):
         """ boolean function. Returns True if the sprite
             is currently colliding with the target sprite,
@@ -1417,14 +1439,14 @@ class SuperSprite(pygame.sprite.Sprite):
                 if self.rect.colliderect(target.rect):
                     collision = True
         return collision
-    
+
     def collidesGroup(self, target):
         """ wrapper for pygame.sprite.spritecollideany() function
             simplifies checking sprite - group collisions
-            returns result of collision check (sprite from group 
+            returns result of collision check (sprite from group
             that was hit or None)
             Does not count collision if either sprite is hidden
-            
+
         """
         if self.visible:
             collision = pygame.sprite.spritecollideany(self, target)
@@ -1433,7 +1455,7 @@ class SuperSprite(pygame.sprite.Sprite):
                     return collision
                 else:
                     return None
-        
+
     def distanceTo(self, point):
         """ returns distance to any point in pixels
             can be used in circular collision detection
@@ -1441,27 +1463,27 @@ class SuperSprite(pygame.sprite.Sprite):
         (pointx, pointy) = point
         dx = self.x - pointx
         dy = self.y - pointy
-        
+
         dist = math.sqrt((dx * dx) + (dy * dy))
         return dist
-    
+
     def dirTo(self, point):
-        """ returns direction (in degrees) to 
+        """ returns direction (in degrees) to
             a point """
-        
+
         (pointx, pointy) = point
         dx = self.x - pointx
         dy = self.y - pointy
         dy *= -1
-        
+
         radians = math.atan2(dy, dx)
         dir = radians * 180 / math.pi
         dir += 180
         return dir
-    
+
     def drawTrace(self, color=(0x00, 0x00, 0x00)):
         """ traces a line between previous position
-            and current position of object 
+            and current position of object
         """
         pygame.draw.line(self.scene.background, color, self.oldCenter,
                          self.rect.center, 3)
@@ -1469,10 +1491,10 @@ class SuperSprite(pygame.sprite.Sprite):
 
     def setSize(self, newX, newY):
         self.imageMaster = pygame.transform.scale(self.imageMaster, (newX, newY))
-        
+
     def changeXby(self, value):
         self.x += value
-        
+
     def changeYby(self, value):
         self.y += value
 
@@ -1480,7 +1502,7 @@ class SuperSprite(pygame.sprite.Sprite):
         self.oldPosition = self.rect.center
         self.setPosition((-1000, -1000))
         self.visible = False
-        
+
     def show(self):
         self.visible = True
         self.setPosition(self.oldPosition)
@@ -1490,6 +1512,6 @@ if __name__ == "__main__":
     # change this code to test various features of the engine
     # This code will not run when gameEngine is run as a module
     # (as it usually will be)
-        
+
     game = Scene()
     game.start()
