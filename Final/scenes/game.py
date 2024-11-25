@@ -1,3 +1,5 @@
+import time
+
 import simpleGE
 from sprites.gladiator import Gladiator,EnemyGladiator,HitBox
 from sprites.health import Health
@@ -15,6 +17,14 @@ class Game(simpleGE.Scene):
         """
         super().__init__(size)
         self.sprites = []
+
+        self.bgMusic = simpleGE.Music("assets/background.wav",-1)
+        self.bgMusic.play()
+
+        start_sound = simpleGE.Sound("assets/fight.ogg")
+        start_sound.play()
+
+        self.game_over_sound = simpleGE.Sound("assets/game_over.ogg")
 
         # create the gladiators
         self.gladiator = Gladiator(self)
@@ -57,7 +67,6 @@ class Game(simpleGE.Scene):
         Process the game
         """
         if self.gladiator.is_attacking():
-            print("attacking")
             self.hit_box.show()
             self.hit_box.set_position(self.gladiator, self.gladiator.get_facing_direction())
 
@@ -80,6 +89,8 @@ class Game(simpleGE.Scene):
                 enemy.reset()
 
         if self.lives == 0:
+            self.game_over_sound.play()
+            time.sleep(3)
             self.stop()
 
 if __name__ == "__main__":

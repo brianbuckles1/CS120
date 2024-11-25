@@ -12,6 +12,8 @@ class MainMenu(simpleGE.Scene):
                 """
         super().__init__(size)
 
+        self.background_music = simpleGE.Music("assets/intro.ogg", -1)
+        self.background_music.play()
         self.sprites = []
         self.__command = 'play'
         self.__high_score = high_score

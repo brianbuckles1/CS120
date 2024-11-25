@@ -31,10 +31,12 @@ class Gladiator(simpleGE.Sprite):
 
         self.attackingSheet = simpleGE.SpriteSheet("assets/hero-attacking.png", (192, 192), 4, 6, .1)
 
+        self.attack_sound = simpleGE.Sound("assets/sword_sfx.wav")
+
         # set the initial variables
         self.__walkingCol=1
         self.__walkingRow = 2
-        self.__moveSpeed = 2
+        self.__moveSpeed = 4
         self.__attackDirection = FacingDirection.UP
         self.__attackCol = 0
         self.__isAttacking = False
@@ -107,14 +109,14 @@ class Gladiator(simpleGE.Sprite):
 
         # if attacking, set the image to the attacking image
         if self.__isAttacking:
+
             # if self.__attackCol >= 6:
             if self.attackingSheet.isDone():
-                print("done")
                 self.__isAttacking = False
                 self.__attackCol = 0
                 self.attackingSheet.animCol=0
+                self.attack_sound.play()
             else:
-                print(f"row: {self.__attackDirection.value} column: {self.__attackCol}")
                 self.copyImage(self.attackingSheet.getNext(self.__attackDirection.value))
 
 class EnemyGladiator(simpleGE.Sprite):
@@ -170,21 +172,17 @@ class HitBox(simpleGE.Sprite):
         Set the position of the hit box based on the direction the gladiator is facing
         """
         if direction == FacingDirection.DOWN:
-            print("down")
             self.setSize(64, 20)
             self.position = (gladiator.x, gladiator.y + 30)
 
         if direction == FacingDirection.UP:
-            print("up")
             self.setSize(64, 20)
             self.position = (gladiator.x, gladiator.y - 30)
 
         if direction == FacingDirection.LEFT:
-            print("left")
             self.setSize(30, 64)
             self.position = (gladiator.x - 30, gladiator.y)
 
         if direction == FacingDirection.RIGHT:
-            print("right")
             self.setSize(30, 64)
             self.position = (gladiator.x + 30, gladiator.y)

@@ -868,6 +868,43 @@ class Timer(object):
     timeLeft = self.totalTime - self.getElapsedTime()
     return timeLeft
 
+class Music(object):
+    """
+    music class for playing music files
+    """
+    def __init__(self, musicFile, loop = -1):
+        """
+        musicFile: the name of the music
+        """
+        super().__init__()
+        self.music = musicFile
+        self.loop = loop
+
+    def play(self):
+        """
+        play the music
+        """
+        pygame.mixer.music.load(self.music)
+        pygame.mixer.music.play(loops=self.loop)
+
+    def stop(self):
+        """
+        stop the music
+        """
+        pygame.mixer.music.stop()
+
+    def pause(self):
+        """
+        pause the music
+        """
+        pygame.mixer.music.pause()
+
+    def unpause(self):
+        """
+        unpause the music
+        """
+        pygame.mixer.music.unpause()
+
 class Sound(object):
   def __init__(self, soundFile):
     super().__init__()
