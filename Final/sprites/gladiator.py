@@ -15,7 +15,41 @@ class FacingDirection(Enum):
     DOWN = 2
     RIGHT = 3
 
-class Gladiator(simpleGE.Sprite):
+class BaseGladiator(simpleGE.Sprite):
+    """
+    Base Gladiator class
+    """
+
+    def getDirectionToSprite(self, sprite:simpleGE.Sprite)->FacingDirection:
+        """
+        Get the direction to a sprite
+        """
+        moveXDirection = FacingDirection.LEFT
+        moveYDirection = FacingDirection.UP
+        moveDirection = FacingDirection.UP
+
+        if self.y > sprite.y:
+            moveYDirection = FacingDirection.UP
+        elif self.y < sprite.y:
+            moveYDirection = FacingDirection.DOWN
+
+        if self.x > sprite.x:
+            moveXDirection = FacingDirection.LEFT
+        elif self.x < sprite.x:
+            moveXDirection = FacingDirection.RIGHT
+
+        distanceX = abs(self.x - sprite.x)
+        distanceY = abs(self.y - sprite.y)
+
+        if distanceX > distanceY:
+            moveDirection = moveXDirection
+        else:
+            moveDirection = moveYDirection
+
+        print(f"Move Direction: {moveDirection}")
+        return moveDirection
+
+class Gladiator(BaseGladiator):
     """
     Gladiator class
     """
@@ -119,7 +153,7 @@ class Gladiator(simpleGE.Sprite):
             else:
                 self.copyImage(self.attackingSheet.getNext(self.__attackDirection.value))
 
-class EnemyGladiator(simpleGE.Sprite):
+class EnemyGladiator(BaseGladiator):
     """
     Gladiator class
     """
@@ -134,12 +168,6 @@ class EnemyGladiator(simpleGE.Sprite):
         self.walkingSheet.startCol=1
         self.speed = randint(3, 5)
 
-    def process(self):
-        """
-        process the enemy gladiator
-        """
-        self.copyImage(self.walkingSheet.getNext(3))
-
     def reset(self):
         """
         reset the enemy gladiator to a random spawn point
@@ -153,6 +181,23 @@ class EnemyGladiator(simpleGE.Sprite):
             self.position = (0, randint(0, self.scene.screen.get_size()[1]))
         if spawn_point == 3:
             self.position = (self.scene.screen.get_size()[0], randint(0, self.scene.screen.get_size()[1]))
+
+    def setAnimationDirection(self, direction):
+        """
+        Set the direction of the sprite
+        """
+
+        if direction == FacingDirection.UP:
+            self.copyImage(self.walkingSheet.getNext(0))
+
+        if direction == FacingDirection.LEFT:
+            self.copyImage(self.walkingSheet.getNext(1))
+
+        if direction == FacingDirection.DOWN:
+            self.copyImage(self.walkingSheet.getNext(2))
+
+        if direction == FacingDirection.RIGHT:
+            self.copyImage(self.walkingSheet.getNext(3))
 
 class HitBox(simpleGE.Sprite):
     """

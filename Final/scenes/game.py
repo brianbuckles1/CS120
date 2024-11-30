@@ -50,7 +50,7 @@ class Game(simpleGE.Scene):
         self.__setLives(3)
 
         # create the enemies
-        self.__createEnemies(5)
+        self.__createEnemies(4)
 
     def __addScore(self, num:int):
         """
@@ -108,6 +108,7 @@ class Game(simpleGE.Scene):
 
             for enemy in self.enemies:
                 enemy.moveTowardSprite(self.gladiator)
+                enemy.setAnimationDirection(enemy.getDirectionToSprite(self.gladiator))
                 self.__checkEnemyToPlayCollision(enemy)
 
     def __checkPlayerHitBoxCollision(self,enemy:EnemyGladiator):
