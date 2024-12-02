@@ -18,6 +18,8 @@ class Game(simpleGE.Scene):
         super().__init__(size)
         self.sprites = []
 
+        self.setImage("assets/background.png")
+
         # setup the background music
         self.bgMusic = simpleGE.Music("assets/background.wav",-1)
         self.bgMusic.play()
@@ -45,12 +47,14 @@ class Game(simpleGE.Scene):
         self.lbl_score.center = (900, 750)
         self.sprites.append(self.lbl_score)
 
-        self.lives = 3
+        # create the lives
+        # DO NOT SET THIS HERE USE __setLives FUNCTION
+        self.lives = 1
         self.hearts = []
         self.__setLives(3)
 
         # create the enemies
-        self.__createEnemies(4)
+        self.__createEnemies(5)
 
     def __addScore(self, num:int):
         """
@@ -82,6 +86,7 @@ class Game(simpleGE.Scene):
         Create the enemies
         """
         for i in range(num):
+            print("Adding enemy")
             enemy = EnemyGladiator(self)
             enemy.reset()
             self.sprites.append(enemy)

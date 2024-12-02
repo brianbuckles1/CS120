@@ -601,18 +601,20 @@ class Sprite(pygame.sprite.Sprite):
 
     def moveTowardSprite(self, target):
         """ moves sprite toward another sprite """
-        # Calculate the direction vector
-        dir_x = target.x - self.x
-        dir_y = target.y - self.y
-        distance = (dir_x ** 2 + dir_y ** 2) ** 0.5
 
-        if distance != 0:
-            dir_x /= distance
-            dir_y /= distance
+        if target.visible:
+            # Calculate the direction vector
+            dir_x = target.x - self.x
+            dir_y = target.y - self.y
+            distance = (dir_x ** 2 + dir_y ** 2) ** 0.5
 
-        # Update enemy position
-        self.dx = dir_x * self.speed
-        self.dy = dir_y * self.speed
+            if distance != 0:
+                dir_x /= distance
+                dir_y /= distance
+
+            # Update enemy position
+            self.dx = dir_x * self.speed
+            self.dy = dir_y * self.speed
 
 
 class Label(pygame.sprite.Sprite):

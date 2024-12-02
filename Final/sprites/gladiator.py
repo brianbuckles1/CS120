@@ -28,25 +28,25 @@ class BaseGladiator(simpleGE.Sprite):
         moveYDirection = FacingDirection.UP
         moveDirection = FacingDirection.UP
 
-        if self.y > sprite.y:
-            moveYDirection = FacingDirection.UP
-        elif self.y < sprite.y:
-            moveYDirection = FacingDirection.DOWN
+        # no need to check if the sprite is hidden
+        if self.visible:
+            if self.y > sprite.y:
+                moveYDirection = FacingDirection.UP
+            elif self.y < sprite.y:
+                moveYDirection = FacingDirection.DOWN
 
-        if self.x > sprite.x:
-            moveXDirection = FacingDirection.LEFT
-        elif self.x < sprite.x:
-            moveXDirection = FacingDirection.RIGHT
+            if self.x > sprite.x:
+                moveXDirection = FacingDirection.LEFT
+            elif self.x < sprite.x:
+                moveXDirection = FacingDirection.RIGHT
 
-        distanceX = abs(self.x - sprite.x)
-        distanceY = abs(self.y - sprite.y)
+            distanceX = abs(self.x - sprite.x)
+            distanceY = abs(self.y - sprite.y)
 
-        if distanceX > distanceY:
-            moveDirection = moveXDirection
-        else:
-            moveDirection = moveYDirection
-
-        print(f"Move Direction: {moveDirection}")
+            if distanceX > distanceY:
+                moveDirection = moveXDirection
+            else:
+                moveDirection = moveYDirection
         return moveDirection
 
 class Gladiator(BaseGladiator):
@@ -74,6 +74,7 @@ class Gladiator(BaseGladiator):
         self.__attackDirection = FacingDirection.UP
         self.__attackCol = 0
         self.__isAttacking = False
+        self.__walking = False
 
     def is_attacking(self):
         """
@@ -99,44 +100,29 @@ class Gladiator(BaseGladiator):
         """
         self.dx=0
         self.dy=0
-        walking=False
 
         # if the up arrow key is pressed, move up
         if self.isKeyPressed(pygame.K_UP):
-            self.__walkingRow=0
-            self.dy=-self.__moveSpeed
-            self.__attackDirection = FacingDirection.UP
-            walking = True
+            self.moveUpAction()
 
         # if the down arrow key is pressed, move down
         if self.isKeyPressed(pygame.K_DOWN):
-            self.__walkingRow=2
-            self.dy=self.__moveSpeed
-            self.__attackDirection = FacingDirection.DOWN
-            walking = True
+            self.moveDownAction()
 
         # if the left arrow key is pressed, move left
         if self.isKeyPressed(pygame.K_LEFT):
-            self.__walkingRow=1
-            self.dx=-self.__moveSpeed
-            self.__attackDirection = FacingDirection.LEFT
-            walking = True
+            self.moveLeftAction()
 
         # if the right arrow key is pressed, move right
         if self.isKeyPressed(pygame.K_RIGHT):
-            self.__walkingRow=3
-            self.dx=self.__moveSpeed
-            self.__attackDirection = FacingDirection.RIGHT
-            walking = True
+            self.moveRightAction()
 
         # if the space bar is pressed, stop moving and attack
         if self.isKeyPressed(pygame.K_SPACE):
-            self.dx=0
-            self.dy=0
-            self.__isAttacking = True
+            self.attackAction()
 
         # if walking, set the image to the walking image
-        if walking:
+        if self.__walking:
             self.copyImage(self.walkingSheet.getNext(self.__walkingRow))
         else:
             self.copyImage(self.walkingSheet.getCellImage(0, self.__walkingRow))
@@ -152,6 +138,50 @@ class Gladiator(BaseGladiator):
                 self.attack_sound.play()
             else:
                 self.copyImage(self.attackingSheet.getNext(self.__attackDirection.value))
+
+    def moveUpAction(self):
+        """
+        move up action
+        """
+        self.__walkingRow = 0
+        self.dy = -self.__moveSpeed
+        self.__attackDirection = FacingDirection.UP
+        walking = True
+
+    def moveDownAction(self):
+        """
+        move down action
+        """
+        self.__walkingRow = 2
+        self.dy = self.__moveSpeed
+        self.__attackDirection = FacingDirection.DOWN
+        walking = True
+
+    def moveLeftAction(self):
+        """
+        move left action
+        """
+        self.__walkingRow = 1
+        self.dx = -self.__moveSpeed
+        self.__attackDirection = FacingDirection.LEFT
+        walking = True
+
+    def moveRightAction(self):
+        """
+        move right action
+        """
+        self.__walkingRow = 3
+        self.dx = self.__moveSpeed
+        self.__attackDirection = FacingDirection.RIGHT
+        walking = True
+
+    def attackAction(self):
+        """
+        attack action
+        """
+        self.dx = 0
+        self.dy = 0
+        self.__isAttacking = True
 
 class EnemyGladiator(BaseGladiator):
     """
@@ -211,6 +241,11 @@ class HitBox(simpleGE.Sprite):
         """
         super().__init__(scene)
         self.setSize(64, 20)
+
+    def process(self):
+        # hide the actual hit box from view but still check for collisions
+        # we do not want to use the hide() method as it will not check for collisions
+        self.image.set_alpha(0)
 
     def set_position(self, gladiator:simpleGE.Sprite, direction:FacingDirection):
         """
