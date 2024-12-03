@@ -268,7 +268,31 @@ class EnemyGladiator(BaseGladiator):
         if direction == FacingDirection.RIGHT:
             self.copyImage(self.walkingSheet.getNext(3))
 
-class HitBox(simpleGE.Sprite):
+class PlayerHitBox(simpleGE.Sprite):
+    """
+    HitBox class
+
+    This class is used to detect if the gladiator is hit by an enemy
+    """
+    def __init__(self, scene: simpleGE.Scene):
+        """
+        Initialize the HitBox
+        """
+        super().__init__(scene)
+        self.setSize(32, 50)
+
+    def process(self):
+        # hide the actual hit box from view but still check for collisions
+        # we do not want to use the hide() method as it will not check for collisions
+        self.image.set_alpha(0)
+
+    def setPosition(self, gladiator:simpleGE.Sprite):
+        """
+        Set the position of the hit box to the gladiator
+        """
+        self.position = (gladiator.x, gladiator.y)
+
+class PlayerAttackHitBox(simpleGE.Sprite):
     """
     HitBox class
 
@@ -292,16 +316,16 @@ class HitBox(simpleGE.Sprite):
         """
         if direction == FacingDirection.DOWN:
             self.setSize(128, 50)
-            self.position = (gladiator.x, gladiator.y + 50)
+            self.position = (gladiator.x, gladiator.y + 30)
 
         if direction == FacingDirection.UP:
             self.setSize(128, 50)
-            self.position = (gladiator.x, gladiator.y - 50)
+            self.position = (gladiator.x, gladiator.y - 20)
 
         if direction == FacingDirection.LEFT:
             self.setSize(50, 128)
-            self.position = (gladiator.x - 70, gladiator.y)
+            self.position = (gladiator.x - 50, gladiator.y)
 
         if direction == FacingDirection.RIGHT:
             self.setSize(50, 128)
-            self.position = (gladiator.x + 70, gladiator.y)
+            self.position = (gladiator.x + 50, gladiator.y)

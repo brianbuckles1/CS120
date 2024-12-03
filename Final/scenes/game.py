@@ -1,7 +1,7 @@
 import time
 
 import simpleGE
-from sprites.gladiator import Gladiator,EnemyGladiator,HitBox
+from sprites.gladiator import Gladiator, EnemyGladiator, PlayerAttackHitBox, PlayerHitBox
 from sprites.health import Health
 
 
@@ -36,9 +36,14 @@ class Game(simpleGE.Scene):
         self.gladiator.reset()
         self.sprites.append(self.gladiator)
         self.enemies = []
-        self.hit_box = HitBox(self)
-        self.hit_box.hide()
-        self.sprites.append(self.hit_box)
+
+        self.playerHitBox = PlayerHitBox(self)
+        self.playerHitBox.position = (self.gladiator.position[0], self.gladiator.position[1] + 10)
+        self.sprites.append(self.playerHitBox)
+
+        self.playerAttackHitBox = PlayerAttackHitBox(self)
+        self.playerAttackHitBox.hide()
+        self.sprites.append(self.playerAttackHitBox)
         self.__score = 0
 
         # create score label
@@ -98,18 +103,19 @@ class Game(simpleGE.Scene):
         """
         Process the game
         """
+        self.playerHitBox.position = (self.gladiator.position[0], self.gladiator.position[1] + 10)
         if self.gladiator.deathAnimationComplete():
             self.game_over_sound.play()
             time.sleep(1.5)  # wait for the sound to finish
             self.stop()
         if self.gladiator.isAttacking():
-            self.hit_box.show()
-            self.hit_box.setPosition(self.gladiator, self.gladiator.getFacingDirection())
+            self.playerAttackHitBox.show()
+            self.playerAttackHitBox.setPosition(self.gladiator, self.gladiator.getFacingDirection())
 
             for enemy in self.enemies:
                 self.__checkPlayerHitBoxCollision(enemy)
         else:
-            self.hit_box.hide()
+            self.playerAttackHitBox.hide()
 
             for enemy in self.enemies:
                 enemy.moveTowardSprite(self.gladiator)
@@ -120,7 +126,7 @@ class Game(simpleGE.Scene):
         """
         Check if the player's hit box collides with the enemy
         """
-        if self.hit_box.collidesWith(enemy):
+        if self.playerAttackHitBox.collidesWith(enemy):
             enemy.reset()
             self.__addScore(1)
 
@@ -128,7 +134,7 @@ class Game(simpleGE.Scene):
         """
         Check if the enemy collides with the player
         """
-        if enemy.collidesWith(self.gladiator):
+        if enemy.collidesWith(self.playerHitBox):
             self.__playerHit()
             enemy.reset()
 
