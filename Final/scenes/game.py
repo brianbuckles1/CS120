@@ -48,10 +48,8 @@ class Game(simpleGE.Scene):
         self.sprites.append(self.lbl_score)
 
         # create the lives
-        # DO NOT SET THIS HERE USE __setLives FUNCTION
-        self.lives = 1
         self.hearts = []
-        self.__setLives(3)
+        self.__setLives(self.gladiator.getLives())
 
         # create the enemies
         self.__createEnemies(5)
@@ -67,15 +65,13 @@ class Game(simpleGE.Scene):
         """
         Handle the player being hit
         """
-        self.lives -= 1
-        self.hearts[self.lives].hide()
-        self.__checkLives()
+        self.gladiator.lose_life()
+        self.hearts[self.gladiator.getLives()].hide()
 
     def __setLives(self, num:int):
         """
         Set the number of lives
         """
-        self.lives = num
         for i in range(num):
             heart = Health(self, (50 + (i * 50), 740))
             self.sprites.append(heart)
@@ -102,9 +98,13 @@ class Game(simpleGE.Scene):
         """
         Process the game
         """
-        if self.gladiator.is_attacking():
+        if self.gladiator.deathAnimationComplete():
+            self.game_over_sound.play()
+            time.sleep(1.5)  # wait for the sound to finish
+            self.stop()
+        if self.gladiator.isAttacking():
             self.hit_box.show()
-            self.hit_box.set_position(self.gladiator, self.gladiator.get_facing_direction())
+            self.hit_box.setPosition(self.gladiator, self.gladiator.getFacingDirection())
 
             for enemy in self.enemies:
                 self.__checkPlayerHitBoxCollision(enemy)
@@ -128,17 +128,9 @@ class Game(simpleGE.Scene):
         """
         Check if the enemy collides with the player
         """
-        if enemy.collidesWith(self.gladiator) and self.lives > 0:
+        if enemy.collidesWith(self.gladiator):
             self.__playerHit()
             enemy.reset()
-
-    def __checkLives(self):
-        """
-        Check the lives of the player
-        """
-        if self.lives == 0:
-            self.game_over_sound.play()
-            self.stop()
 
 if __name__ == "__main__":
     game = Game()

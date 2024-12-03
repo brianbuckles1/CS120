@@ -1,3 +1,4 @@
+import time
 from random import randint
 
 import pygame
@@ -53,7 +54,7 @@ class Gladiator(BaseGladiator):
     """
     Gladiator class
     """
-    def __init__(self, scene:simpleGE.Scene):
+    def __init__(self, scene:simpleGE.Scene, lives:int=3):
         """
         Initialize the Gladiator
         """
@@ -64,8 +65,9 @@ class Gladiator(BaseGladiator):
         self.walkingSheet.startCol=1
 
         self.attackingSheet = simpleGE.SpriteSheet("assets/hero-attacking.png", (192, 192), 4, 6, .1)
-
         self.attack_sound = simpleGE.Sound("assets/sword_sfx.wav")
+
+        self.deathSheet = simpleGE.SpriteSheet("assets/hero-death.png", (64, 64), 1, 6, 0)
 
         # set the initial variables
         self.__walkingCol=1
@@ -75,14 +77,44 @@ class Gladiator(BaseGladiator):
         self.__attackCol = 0
         self.__isAttacking = False
         self.__walking = False
+        self.__death = False
+        self.__lives = lives
 
-    def is_attacking(self):
+    def isAttacking(self):
         """
         Get if the gladiator is attacking
         """
         return self.__isAttacking
 
-    def get_facing_direction(self) -> FacingDirection:
+    def isDead(self):
+        """
+        Get if the gladiator is dead
+        """
+        return self.__lives <= 0
+
+    def deathAnimationComplete(self):
+        """
+        Get if the death animation is complete
+        """
+        return self.deathSheet.isDone()
+
+    def lose_life(self):
+        """
+        Lose a life
+        """
+        if self.__lives > 0:
+            self.__lives -= 1
+
+        if self.__lives == 0:
+            self.__death = True
+
+    def getLives(self):
+        """
+        Get the number of lives
+        """
+        return self.__lives
+
+    def getFacingDirection(self) -> FacingDirection:
         """
         Get the direction the gladiator is facing
         """
@@ -101,43 +133,45 @@ class Gladiator(BaseGladiator):
         self.dx=0
         self.dy=0
 
-        # if the up arrow key is pressed, move up
-        if self.isKeyPressed(pygame.K_UP):
-            self.moveUpAction()
-
-        # if the down arrow key is pressed, move down
-        if self.isKeyPressed(pygame.K_DOWN):
-            self.moveDownAction()
-
-        # if the left arrow key is pressed, move left
-        if self.isKeyPressed(pygame.K_LEFT):
-            self.moveLeftAction()
-
-        # if the right arrow key is pressed, move right
-        if self.isKeyPressed(pygame.K_RIGHT):
-            self.moveRightAction()
-
-        # if the space bar is pressed, stop moving and attack
-        if self.isKeyPressed(pygame.K_SPACE):
-            self.attackAction()
-
-        # if walking, set the image to the walking image
-        if self.__walking:
-            self.copyImage(self.walkingSheet.getNext(self.__walkingRow))
-        else:
-            self.copyImage(self.walkingSheet.getCellImage(0, self.__walkingRow))
-
-        # if attacking, set the image to the attacking image
-        if self.__isAttacking:
-
-            # if self.__attackCol >= 6:
+        if self.__death:
+            self.copyImage(self.deathSheet.getNext(0))
+        elif self.__isAttacking:
             if self.attackingSheet.isDone():
                 self.__isAttacking = False
                 self.__attackCol = 0
                 self.attackingSheet.animCol=0
                 self.attack_sound.play()
             else:
-                self.copyImage(self.attackingSheet.getNext(self.__attackDirection.value))
+                for x in range(6):
+                    self.copyImage(self.attackingSheet.getNext(self.__attackDirection.value))
+        else:
+            # if the up arrow key is pressed, move up
+            if self.isKeyPressed(pygame.K_UP):
+                self.moveUpAction()
+
+            # if the down arrow key is pressed, move down
+            if self.isKeyPressed(pygame.K_DOWN):
+                self.moveDownAction()
+
+            # if the left arrow key is pressed, move left
+            if self.isKeyPressed(pygame.K_LEFT):
+                self.moveLeftAction()
+
+            # if the right arrow key is pressed, move right
+            if self.isKeyPressed(pygame.K_RIGHT):
+                self.moveRightAction()
+
+            # if the space bar is pressed, stop moving and attack
+            if self.isKeyPressed(pygame.K_SPACE):
+                self.attackAction()
+
+            # if walking, set the image to the walking image
+            if self.__walking:
+                self.copyImage(self.walkingSheet.getNext(self.__walkingRow))
+            else:
+                self.copyImage(self.walkingSheet.getCellImage(0, self.__walkingRow))
+
+
 
     def moveUpAction(self):
         """
@@ -196,7 +230,7 @@ class EnemyGladiator(BaseGladiator):
         # set the image assets
         self.walkingSheet = simpleGE.SpriteSheet("assets/enemy-walking.png", (64,64),4, 9,.1)
         self.walkingSheet.startCol=1
-        self.speed = randint(3, 5)
+        self.speed = randint(3, 8)
 
     def reset(self):
         """
@@ -247,7 +281,7 @@ class HitBox(simpleGE.Sprite):
         # we do not want to use the hide() method as it will not check for collisions
         self.image.set_alpha(0)
 
-    def set_position(self, gladiator:simpleGE.Sprite, direction:FacingDirection):
+    def setPosition(self, gladiator:simpleGE.Sprite, direction:FacingDirection):
         """
         Set the position of the hit box based on the direction the gladiator is facing
         """
