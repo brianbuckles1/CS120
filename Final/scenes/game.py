@@ -57,7 +57,7 @@ class Game(simpleGE.Scene):
         self.__setLives(self.gladiator.getLives())
 
         # create the enemies
-        self.__createEnemies(2)
+        self.__createEnemies(5)
 
     def __addScore(self, num:int):
         """
@@ -87,7 +87,6 @@ class Game(simpleGE.Scene):
         Create the enemies
         """
         for i in range(num):
-            print("Adding enemy")
             enemy = EnemyGladiator(self)
             enemy.reset()
             self.sprites.append(enemy)

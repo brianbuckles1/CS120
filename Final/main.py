@@ -45,6 +45,7 @@ def loadData():
     # if the file is not found print an error message stating such
     except FileNotFoundError as e:
         print("No save file found")
+    # if there is an error loading the file print an error message
     except IOError as e:
         print(f"Error loading JSON: {str(e)}")
     return saveData

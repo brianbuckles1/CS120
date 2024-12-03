@@ -146,13 +146,33 @@ class Gladiator(BaseGladiator):
                 self.copyImage(self.attackingSheet.getNext(self.__attackDirection.value))
         else:
             # if the up arrow key is pressed, move up
+            if self.isKeyPressed(pygame.K_w):
+                if self.y >= 100:
+                    self.moveUpAction()
+
+            # if the down arrow key is pressed, move down
+            if self.isKeyPressed(pygame.K_s):
+                if self.y <= self.scene.screen.get_size()[1]-100:
+                    self.moveDownAction()
+
+            # if the left arrow key is pressed, move left
+            if self.isKeyPressed(pygame.K_a):
+                if self.x >= 100:
+                    self.moveLeftAction()
+
+            # if the right arrow key is pressed, move right
+            if self.isKeyPressed(pygame.K_d):
+                if self.x <= self.scene.screen.get_size()[0]-100:
+                    self.moveRightAction()
+
+            # if the up arrow key is pressed, move up
             if self.isKeyPressed(pygame.K_UP):
                 if self.y >= 100:
                     self.moveUpAction()
 
             # if the down arrow key is pressed, move down
             if self.isKeyPressed(pygame.K_DOWN):
-                if self.y <= self.scene.screen.get_size()[1]-100:
+                if self.y <= self.scene.screen.get_size()[1] - 100:
                     self.moveDownAction()
 
             # if the left arrow key is pressed, move left
@@ -162,7 +182,7 @@ class Gladiator(BaseGladiator):
 
             # if the right arrow key is pressed, move right
             if self.isKeyPressed(pygame.K_RIGHT):
-                if self.x <= self.scene.screen.get_size()[0]-100:
+                if self.x <= self.scene.screen.get_size()[0] - 100:
                     self.moveRightAction()
 
             # if the space bar is pressed, stop moving and attack
@@ -234,8 +254,8 @@ class EnemyGladiator(BaseGladiator):
         # set the image assets
         self.walkingSheet = simpleGE.SpriteSheet("assets/enemy-walking.png", (64,64),4, 9,.1)
         self.walkingSheet.startCol=1
-        # self.speed = randint(3, 8)
-        self.speed =1
+        self.speed = randint(3, 6)
+        # self.speed =1
 
     def reset(self):
         """

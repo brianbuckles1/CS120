@@ -12,6 +12,7 @@ class MainMenu(simpleGE.Scene):
                 """
         super().__init__(size)
 
+        self.setImage("assets/menu_background.png")
         self.background_music = simpleGE.Music("assets/intro.ogg", -1)
         self.background_music.play()
         self.sprites = []
@@ -21,11 +22,10 @@ class MainMenu(simpleGE.Scene):
         # create the title
         lbl_title = simpleGE.Label()
         lbl_title.text="Gladiator"
-        # lbl_title.set_font_size(50)
+        lbl_title.set_font_size(50)
         lbl_title.size= (400,60)
-        lbl_title.fgColor = "white"
+        lbl_title.fgColor = "red"
         lbl_title.center = (200, 40)
-        lbl_title.clearBack = True
         self.sprites.append(lbl_title)
 
         # create label for high score
@@ -33,25 +33,38 @@ class MainMenu(simpleGE.Scene):
         lbl_high_score.text = f"High Score: {self.__high_score}"
         lbl_high_score.center = (600,25)
         lbl_high_score.fgColor="white"
+        lbl_high_score.clearBack=True
         self.sprites.append(lbl_high_score)
 
         # create multi label for instructions
-        mlbl_instructions = simpleGE.MultiLabel()
-        mlbl_instructions.size = (550, 250)
-        mlbl_instructions.textLines = [
-            "Instructions:"
-            ,""
-            ,"Fight off as many gladiators as you can."
-            ,""
-            ,"You start the game with 3 lives and each time you"
-            ,"get hit, you will lose 1 life. The game is over when"
-            ,"you have no lives remaining."
-        ]
-        mlbl_instructions.bgColor = "black"
-        mlbl_instructions.fgColor = "white"
-        mlbl_instructions.center = (500, 250)
+        lbl_instructions = simpleGE.Label()
+        # mlbl_instructions.size = (300, 50)
+        lbl_instructions.text = "Fight in the gladiators arena"
+        lbl_instructions.size = (300, 25)
+        # lbl_instructions.bgColor = "black"
+        lbl_instructions.fgColor = "white"
+        lbl_instructions.clearBack = True
+        lbl_instructions.center = (500, 100)
 
-        self.sprites.append(mlbl_instructions)
+        lbl_movement = simpleGE.Label()
+        lbl_movement.text = "Movement: WASD or Arrow Keys"
+        lbl_movement.size = (400, 25)
+        # lbl_movement.bgColor = "black"
+        lbl_movement.fgColor = "white"
+        lbl_movement.center = (500, 200)
+        lbl_movement.clearBack = True
+
+        lbl_attack = simpleGE.Label()
+        lbl_attack.text = "Attack: Spacebar"
+        lbl_attack.size = (400, 25)
+        # lbl_attack.bgColor = "black"
+        lbl_attack.fgColor = "white"
+        lbl_attack.center = (500, 225)
+        lbl_attack.clearBack = True
+
+        self.sprites.append(lbl_movement)
+        self.sprites.append(lbl_attack)
+        self.sprites.append(lbl_instructions)
 
         # create button for starting the game
         self.btn_play = simpleGE.Button()
