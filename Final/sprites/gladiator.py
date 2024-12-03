@@ -64,7 +64,7 @@ class Gladiator(BaseGladiator):
         self.walkingSheet = simpleGE.SpriteSheet("assets/hero-walking.png", (64,64),4, 9,.1)
         self.walkingSheet.startCol=1
 
-        self.attackingSheet = simpleGE.SpriteSheet("assets/hero-attacking.png", (192, 192), 4, 6, .1)
+        self.attackingSheet = simpleGE.SpriteSheet("assets/hero-attacking.png", (192, 192), 4, 6, 0)
         self.attack_sound = simpleGE.Sound("assets/sword_sfx.wav")
 
         self.deathSheet = simpleGE.SpriteSheet("assets/hero-death.png", (64, 64), 1, 6, 0)
@@ -142,8 +142,7 @@ class Gladiator(BaseGladiator):
                 self.attackingSheet.animCol=0
                 self.attack_sound.play()
             else:
-                for x in range(6):
-                    self.copyImage(self.attackingSheet.getNext(self.__attackDirection.value))
+                self.copyImage(self.attackingSheet.getNext(self.__attackDirection.value))
         else:
             # if the up arrow key is pressed, move up
             if self.isKeyPressed(pygame.K_UP):
@@ -286,17 +285,17 @@ class HitBox(simpleGE.Sprite):
         Set the position of the hit box based on the direction the gladiator is facing
         """
         if direction == FacingDirection.DOWN:
-            self.setSize(64, 20)
-            self.position = (gladiator.x, gladiator.y + 30)
+            self.setSize(128, 50)
+            self.position = (gladiator.x, gladiator.y + 50)
 
         if direction == FacingDirection.UP:
-            self.setSize(64, 20)
-            self.position = (gladiator.x, gladiator.y - 30)
+            self.setSize(128, 50)
+            self.position = (gladiator.x, gladiator.y - 50)
 
         if direction == FacingDirection.LEFT:
-            self.setSize(30, 64)
-            self.position = (gladiator.x - 30, gladiator.y)
+            self.setSize(50, 128)
+            self.position = (gladiator.x - 70, gladiator.y)
 
         if direction == FacingDirection.RIGHT:
-            self.setSize(30, 64)
-            self.position = (gladiator.x + 30, gladiator.y)
+            self.setSize(50, 128)
+            self.position = (gladiator.x + 70, gladiator.y)
