@@ -229,7 +229,8 @@ class EnemyGladiator(BaseGladiator):
         # set the image assets
         self.walkingSheet = simpleGE.SpriteSheet("assets/enemy-walking.png", (64,64),4, 9,.1)
         self.walkingSheet.startCol=1
-        self.speed = randint(3, 8)
+        # self.speed = randint(3, 8)
+        self.speed =1
 
     def reset(self):
         """
@@ -237,13 +238,17 @@ class EnemyGladiator(BaseGladiator):
         """
         spawn_point = randint(0, 3)
         if spawn_point == 0:
-            self.position = (randint(0, self.scene.screen.get_size()[0]), 0)
+            self.position = (randint(100, self.scene.screen.get_size()[0]), 100)
+            print(f"Spawn point 0: {self.position}")
         if spawn_point == 1:
-            self.position = (randint(0, self.scene.screen.get_size()[0]), self.scene.screen.get_size()[1])
+            self.position = (randint(100, self.scene.screen.get_size()[0]), self.scene.screen.get_size()[1]-100)
+            print(f"Spawn point 1: {self.position}")
         if spawn_point == 2:
-            self.position = (0, randint(0, self.scene.screen.get_size()[1]))
+            self.position = (100, randint(0, self.scene.screen.get_size()[1]))
+            print(f"Spawn point 2: {self.position}")
         if spawn_point == 3:
-            self.position = (self.scene.screen.get_size()[0], randint(0, self.scene.screen.get_size()[1]))
+            self.position = (self.scene.screen.get_size()[0]-100 , randint(0, self.scene.screen.get_size()[1]))
+            print(f"Spawn point 3: {self.position}")
 
     def setAnimationDirection(self, direction):
         """
