@@ -130,6 +130,7 @@ class Gladiator(BaseGladiator):
         """
         process the gladiator
         """
+        self.__walking = False
         self.dx=0
         self.dy=0
 
@@ -146,19 +147,23 @@ class Gladiator(BaseGladiator):
         else:
             # if the up arrow key is pressed, move up
             if self.isKeyPressed(pygame.K_UP):
-                self.moveUpAction()
+                if self.y >= 100:
+                    self.moveUpAction()
 
             # if the down arrow key is pressed, move down
             if self.isKeyPressed(pygame.K_DOWN):
-                self.moveDownAction()
+                if self.y <= self.scene.screen.get_size()[1]-100:
+                    self.moveDownAction()
 
             # if the left arrow key is pressed, move left
             if self.isKeyPressed(pygame.K_LEFT):
-                self.moveLeftAction()
+                if self.x >= 100:
+                    self.moveLeftAction()
 
             # if the right arrow key is pressed, move right
             if self.isKeyPressed(pygame.K_RIGHT):
-                self.moveRightAction()
+                if self.x <= self.scene.screen.get_size()[0]-100:
+                    self.moveRightAction()
 
             # if the space bar is pressed, stop moving and attack
             if self.isKeyPressed(pygame.K_SPACE):
@@ -179,7 +184,7 @@ class Gladiator(BaseGladiator):
         self.__walkingRow = 0
         self.dy = -self.__moveSpeed
         self.__attackDirection = FacingDirection.UP
-        walking = True
+        self.__walking = True
 
     def moveDownAction(self):
         """
@@ -188,7 +193,7 @@ class Gladiator(BaseGladiator):
         self.__walkingRow = 2
         self.dy = self.__moveSpeed
         self.__attackDirection = FacingDirection.DOWN
-        walking = True
+        self.__walking = True
 
     def moveLeftAction(self):
         """
@@ -197,7 +202,7 @@ class Gladiator(BaseGladiator):
         self.__walkingRow = 1
         self.dx = -self.__moveSpeed
         self.__attackDirection = FacingDirection.LEFT
-        walking = True
+        self.__walking = True
 
     def moveRightAction(self):
         """
@@ -206,7 +211,7 @@ class Gladiator(BaseGladiator):
         self.__walkingRow = 3
         self.dx = self.__moveSpeed
         self.__attackDirection = FacingDirection.RIGHT
-        walking = True
+        self.__walking = True
 
     def attackAction(self):
         """
@@ -239,16 +244,12 @@ class EnemyGladiator(BaseGladiator):
         spawn_point = randint(0, 3)
         if spawn_point == 0:
             self.position = (randint(100, self.scene.screen.get_size()[0]), 100)
-            print(f"Spawn point 0: {self.position}")
         if spawn_point == 1:
             self.position = (randint(100, self.scene.screen.get_size()[0]), self.scene.screen.get_size()[1]-100)
-            print(f"Spawn point 1: {self.position}")
         if spawn_point == 2:
             self.position = (100, randint(0, self.scene.screen.get_size()[1]))
-            print(f"Spawn point 2: {self.position}")
         if spawn_point == 3:
             self.position = (self.scene.screen.get_size()[0]-100 , randint(0, self.scene.screen.get_size()[1]))
-            print(f"Spawn point 3: {self.position}")
 
     def setAnimationDirection(self, direction):
         """
