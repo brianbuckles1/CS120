@@ -22,6 +22,8 @@ OR
 
 ## Pre-requisites
 - Python 3.10 +
+- [SimpleGE Game Engine](https://github.com/twopiharris/simpleGE) - this was included with the project so you don't 
+need to install it. but to learn more about the engine visit the link.
 
 ## Getting Started
 1.) **To get started, clone the repository**
