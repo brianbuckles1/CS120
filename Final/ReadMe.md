@@ -88,14 +88,14 @@ python main.py
   - Attack hit box - used to determine if the enemy is hit by the gladiator's attack
   - Hit box - used to determine if the gladiator is hit by the enemy
 
-### menu screen
+### Menu screen
   - has a title
   - has high score
   - has background music
   - has background image - 
   - start button starts the game
   - quit button quits the game
-### game screen 
+### Game screen 
   - has a wall around the screen that the gladiator cannot pass through
   - the gladiator starting in the center of the screen
   - shows the score in the bottom right corner
