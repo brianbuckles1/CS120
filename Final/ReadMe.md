@@ -99,6 +99,7 @@ whip gladiator, archer, spear, with only needing to worry about the attack anima
 
 Staying on track was not an issue for me.  My issue was thinking too much about the mechanics and all the things I could do
 instead of focusing on the base game.  I had to cut alot of features that I wanted to add because I didn't have enough time.
+My mind kept adding "what if" and "this would be cool".
 
 ## Milestones
 - The gladiator can take damage by the enemy sprite running into the gladiator hit box
